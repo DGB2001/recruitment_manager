@@ -13,4 +13,11 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="ThemeOverlay.search" parent="Theme.RecruitmentManager">
+        <!-- Text color -->
+        <item name="android:editTextColor">#000</item>
+        <!-- Hint text color -->
+        <item name="android:textColorHint">#000</item>
+    </style>
 </resources>
