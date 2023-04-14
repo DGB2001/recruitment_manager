@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:title="Menu">
+            <menu>
+                <item
+                    android:id="@+id/menu_candidate_home"
+                    android:icon="@drawable/ic_home_menu_candidate"
+                    android:title="Trang chủ" />
+
+                <item
+                    android:id="@+id/menu_candidate_tintuyendung"
+                    android:icon="@drawable/ic_tintuyendung_menu_candidate"
+                    android:title="Tin tuyển dụng" />
+
+                <item
+                    android:id="@+id/menu_candidate_nhatuyendung"
+                    android:icon="@drawable/ic_nhatuyendung_menu_candidate"
+                    android:title="Nhà tuyển dụng" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="Ứng dụng">
+            <menu>
+                <item
+                    android:id="@+id/menu_candidate_thongtin"
+                    android:icon="@drawable/ic_thongtinapp_menu_candidate"
+                    android:title="Thông tin ứng dụng" />
+
+                <item
+                    android:id="@+id/menu_candidate_hotro"
+                    android:icon="@drawable/ic_hotro_menu_candidate"
+                    android:title="Hỗ trợ" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="Cài đặt">
+            <menu>
+                <item
+                    android:id="@+id/menu_candidate_account"
+                    android:icon="@drawable/ic_account_menu_candidate"
+                    android:title="Tài khoản" />
+
+                <item
+                    android:id="@+id/nav_hotro"
+                    android:icon="@drawable/ic_signout_menu_candidate"
+                    android:title="Đăng xuất" />
+            </menu>
+        </item>
+    </group>
+
+</menu>
