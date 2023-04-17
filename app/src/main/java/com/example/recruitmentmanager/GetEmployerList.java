@@ -60,14 +60,16 @@ public class GetEmployerList extends AppCompatActivity implements NavigationView
         Intent intent;
         switch (menuItem.getItemId()) {
             case R.id.menu_candidate_home:
-                intent = new Intent(GetEmployerList.this, MainActivity.class);
-                startActivity(intent);
+//                intent = new Intent(GetEmployerList.this, MainActivity.class);
+//                startActivity(intent);
                 break;
 
             case R.id.menu_candidate_tintuyendung:
                 break;
 
             case R.id.menu_candidate_nhatuyendung:
+                intent = new Intent(GetEmployerList.this, GetEmployerList.class);
+                startActivity(intent);
                 break;
 
             case R.id.menu_candidate_thongtin:

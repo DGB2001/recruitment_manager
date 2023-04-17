@@ -77,14 +77,16 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         Intent intent;
         switch (menuItem.getItemId()) {
             case R.id.menu_candidate_home:
-                intent =new Intent(GetRecruitmentNewsList.this,MainActivity.class);
-                startActivity(intent);
+//                intent =new Intent(GetRecruitmentNewsList.this,MainActivity.class);
+//                startActivity(intent);
                 break;
 
             case R.id.menu_candidate_tintuyendung:
                 break;
 
             case R.id.menu_candidate_nhatuyendung:
+                intent =new Intent(GetRecruitmentNewsList.this,GetEmployerList.class);
+                startActivity(intent);
                 break;
 
             case R.id.menu_candidate_thongtin:
