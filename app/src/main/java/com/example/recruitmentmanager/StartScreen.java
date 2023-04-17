@@ -14,7 +14,7 @@ Button btncandidate;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
-        btncandidate = findViewById(R.id.btn_candidate);
+        btncandidate = findViewById(R.id.btnSignupEmployer);
         btnemployer = findViewById(R.id.btn_employer);
         btnemployer.setOnClickListener(new View.OnClickListener() {
             @Override
