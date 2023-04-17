@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#338E9A"
+        app:title="Chi tiết tin tuyển dụng"
+        app:titleTextColor="#f20">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/job_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Title"
+        android:textColor="#151313"
+        android:textSize="24sp" />
+
+    <!-- Mô tả công việc -->
+
+
+    <TextView
+        android:id="@+id/job_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Company Name"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/job_description1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Salary"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/job_description2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Quantity"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/job_description3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Expired_at"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/job_description4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Technical"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/job_description5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Level"
+        android:textSize="16sp" />
+    <!-- Yêu cầu công việc -->
+    <TextView
+        android:id="@+id/job_requirements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Description"
+        android:textSize="16sp" />
+
+    <!-- Nút ứng tuyển -->
+    <Button
+        android:id="@+id/apply_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Ứng tuyển"
+        android:textSize="16sp" />
+
+</LinearLayout>
