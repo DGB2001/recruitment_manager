@@ -1,14 +1,16 @@
-package com.example.recruitmentmanager;
+package com.example.recruitmentmanager.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class SignIn extends AppCompatActivity {
+import com.example.recruitmentmanager.R;
+
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_main);
     }
 }
