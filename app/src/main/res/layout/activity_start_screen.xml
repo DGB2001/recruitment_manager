@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_employer"
             style="@android:style/Widget.Button"
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSignupEmployer"
             style="@android:style/Widget.Button"
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
             android:textColor="#fff"
             android:textSize="20sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button3"
             style="@android:style/Widget.Button"
             android:layout_width="match_parent"
