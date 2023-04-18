@@ -1,4 +1,4 @@
-package com.example.recruitmentmanager;
+package com.example.recruitmentmanager.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.example.recruitmentmanager.R;
 
 public class SignUpCandidate extends AppCompatActivity {
 private EditText editTextEmail, editTextPassword, editTextName, editTextPhone, editTextAddress;

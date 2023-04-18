@@ -1,22 +1,24 @@
-package com.example.recruitmentmanager;
+package com.example.recruitmentmanager.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.widget.Toolbar;
+
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 
+
+import com.example.recruitmentmanager.R;
 import com.google.android.material.navigation.NavigationView;
 
-public class GetRecruitmentNewsList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class GetEmployerList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView nav_view;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
@@ -25,9 +27,9 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_get_recruitment_news_list);
+        setContentView(R.layout.activity_get_employer_list);
 
-        drawerLayout = findViewById(R.id.drawerlayout);
+        drawerLayout = findViewById(R.id.drawerLayout);
         nav_view = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
 
@@ -45,30 +47,12 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         Menu menu = nav_view.getMenu();
 
 
-
-
         setOnClick();
-
-
     }
 
     private void setOnClick() {
         nav_view.setNavigationItemSelectedListener(this);
-    }
 
-    @Override
-    public void onClick(View view) {
-
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -77,7 +61,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         Intent intent;
         switch (menuItem.getItemId()) {
 //            case R.id.menu_candidate_home:
-////                intent =new Intent(GetRecruitmentNewsList.this,MainActivity.class);
+////                intent = new Intent(GetEmployerList.this, MainActivity.class);
 ////                startActivity(intent);
 //                break;
 
@@ -85,7 +69,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 break;
 
             case R.id.menu_candidate_nhatuyendung:
-                intent =new Intent(GetRecruitmentNewsList.this,GetEmployerList.class);
+                intent = new Intent(GetEmployerList.this, GetEmployerList.class);
                 startActivity(intent);
                 break;
 
@@ -106,6 +90,5 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-
     }
 }
