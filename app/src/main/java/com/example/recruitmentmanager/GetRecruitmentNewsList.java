@@ -39,7 +39,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        nav_view.setCheckedItem(R.id.menu_candidate_home);
+        nav_view.setCheckedItem(R.id.menu_candidate_tintuyendung);
 
         /********Hide or show menu items********/
         Menu menu = nav_view.getMenu();
@@ -76,10 +76,10 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         Menu menu = nav_view.getMenu();
         Intent intent;
         switch (menuItem.getItemId()) {
-            case R.id.menu_candidate_home:
-//                intent =new Intent(GetRecruitmentNewsList.this,MainActivity.class);
-//                startActivity(intent);
-                break;
+//            case R.id.menu_candidate_home:
+////                intent =new Intent(GetRecruitmentNewsList.this,MainActivity.class);
+////                startActivity(intent);
+//                break;
 
             case R.id.menu_candidate_tintuyendung:
                 break;
