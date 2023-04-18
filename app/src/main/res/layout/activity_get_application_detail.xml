@@ -84,12 +84,14 @@
         android:textSize="16sp" />
 
     <!-- Nút ứng tuyển -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/apply_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Ứng tuyển"
+        android:background="#246BFD"
+        android:textColor="#fff"
+        android:text="Tạo đơn ứng tuyển"
         android:textSize="16sp" />
 
 </LinearLayout>
