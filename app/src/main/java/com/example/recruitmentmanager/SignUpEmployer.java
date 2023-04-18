@@ -41,26 +41,16 @@ private EditText editTextEmail, editTextPassword, editTextCompanyname, editTextP
         String address = editTextAddress.getText().toString().trim();
 
 
-        if (email.isEmpty()) {
-            editTextEmail.setError("Email is required");
-            editTextEmail.requestFocus();
-            return false;
-        }
-
-        if (companyname.isEmpty()) {
-            editTextCompanyname.setError("Name is required");
-            editTextCompanyname.requestFocus();
-            return false;
-        }
-
-
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//        if (email.isEmpty()) {
+//            editTextEmail.setError("Email is required");
+//            editTextEmail.requestFocus();
+//            return false;
+//        }
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please enter a valid email address");
             editTextEmail.requestFocus();
             return false;
         }
-
         if (password.isEmpty()) {
             editTextPassword.setError("Password is required");
             editTextPassword.requestFocus();
@@ -74,13 +64,21 @@ private EditText editTextEmail, editTextPassword, editTextCompanyname, editTextP
         }
 
 
+        if (companyname.isEmpty()) {
+            editTextCompanyname.setError("Name is required");
+            editTextCompanyname.requestFocus();
+            return false;
+        }
+
+
+
         if (phone.isEmpty()) {
             editTextPhone.setError("Phone number is required");
             editTextPhone.requestFocus();
             return false;
         }
 
-        if (!Patterns.PHONE.matcher(phone).matches()) {
+        if (!Patterns.PHONE.matcher(phone).matches()|| phone.length()<10 || phone.length()>13) {
             editTextPhone.setError("Please enter a valid phone number");
             editTextPhone.requestFocus();
             return false;

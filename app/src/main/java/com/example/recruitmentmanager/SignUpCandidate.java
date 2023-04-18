@@ -44,40 +44,38 @@ private RadioGroup rdoGroupGender;
         String phone = editTextPhone.getText().toString().trim();
         String address = editTextAddress.getText().toString().trim();
 
-        if (name.isEmpty()) {
-            editTextName.setError("Name is required");
-            editTextName.requestFocus();
-            return false;
-        }
 
-        if (email.isEmpty()) {
-            editTextEmail.setError("Email is required");
-            editTextEmail.requestFocus();
-            return false;
-        }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//        if (email.isEmpty()) {
+//            editTextEmail.setError("Email is required");
+//            editTextEmail.requestFocus();
+//            return false;
+//        }
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please enter a valid email address");
             editTextEmail.requestFocus();
             return false;
         }
-
         if (password.isEmpty()) {
             editTextPassword.setError("Password is required");
             editTextPassword.requestFocus();
             return false;
         }
-
         if (password.length() < 6) {
             editTextPassword.setError("Password must be at least 6 characters");
             editTextPassword.requestFocus();
             return false;
         }
-
+        if (name.isEmpty()) {
+            editTextName.setError("Name is required");
+            editTextName.requestFocus();
+            return false;
+        }
         if (selectedGenderId == -1) {
             Toast.makeText(getApplicationContext(), "Please select a gender", Toast.LENGTH_SHORT).show();
             return false;
         }
+
 
         if (phone.isEmpty()) {
             editTextPhone.setError("Phone number is required");
