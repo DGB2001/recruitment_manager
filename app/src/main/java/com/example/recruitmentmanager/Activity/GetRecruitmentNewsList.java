@@ -113,6 +113,8 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 break;
 
             case R.id.menu_candidate_account:
+                intent = new Intent(GetRecruitmentNewsList.this, GetCandidateInfoDetail.class);
+                startActivity(intent);
                 break;
 
             case R.id.menu_candidate_logout:
