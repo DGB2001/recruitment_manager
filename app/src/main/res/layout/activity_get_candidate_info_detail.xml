@@ -76,7 +76,8 @@
                     android:layout_height="48dp"
                     android:layout_below="@id/emailLabel"
                     android:layout_marginTop="24dp"
-                    android:layout_toRightOf="@id/roleLabel" />
+                    android:layout_toRightOf="@id/roleLabel"
+                    android:enabled="false"/>
 
                 <TextView
                     android:id="@+id/statusLabel"
@@ -92,7 +93,8 @@
                     android:layout_height="48dp"
                     android:layout_below="@id/roleLabel"
                     android:layout_marginTop="24dp"
-                    android:layout_toRightOf="@id/statusLabel" />
+                    android:layout_toRightOf="@id/statusLabel"
+                    android:enabled="false"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnUpdate"

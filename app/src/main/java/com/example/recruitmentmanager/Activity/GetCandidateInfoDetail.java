@@ -24,10 +24,12 @@ public class GetCandidateInfoDetail extends AppCompatActivity {
         tvstatus = findViewById(R.id.tvStatus);
         btndelete = findViewById(R.id.btnDelete);
         btnupdate = findViewById(R.id.btnUpdate);
+        sharedPreferencesManager = new SharedPreferencesManager(this);
 
         tvemail.setText(sharedPreferencesManager.getUser().getEmail());
         tvrole.setText(sharedPreferencesManager.getUser().getRole());
         tvstatus.setText(sharedPreferencesManager.getUser().getStatus());
+
 
     }
 }
