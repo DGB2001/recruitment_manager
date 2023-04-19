@@ -73,26 +73,21 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
             public void onResponse(Call<AuthLoginResponse> call, Response<AuthLoginResponse> response) {
                 if (response.isSuccessful()) {
                     AuthLoginResponse authLogin = response.body();
+                    Log.e("TAG", "candidateid." + authLogin.getCandidate_id());
+
                     if(cb_remember_me.isChecked()==true){
-                        if(authLogin.getRole().toString().equals("Ứng viên")){
-                            Log.e("TAG", "id" + authLogin.getId());
-                            sharedPreferences.saveUserCandidate(authLogin);
-                            Intent intent = new Intent(SignIn.this, GetRecruitmentNewsList.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                        if(authLogin.getRole().toString().equals("Nhà tuyển dụng")){
-                            sharedPreferences.saveUserEmployer(authLogin);
-                            Intent intent = new Intent(SignIn.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    } else {
+                        sharedPreferences.saveUser(authLogin);
+                        Log.e("TAG", "candidateid." + sharedPreferences.getUserAuthLogin().getCandidate_id());
+                        Log.e("TAG", "userid." + sharedPreferences.getUserAuthLogin().getId());
+                        Log.e("TAG", "email." + sharedPreferences.getUserAuthLogin().getEmail());
+                        Log.e("TAG", "role." + sharedPreferences.getUserAuthLogin().getRole());
                         Intent intent = new Intent(SignIn.this, GetRecruitmentNewsList.class);
                         startActivity(intent);
                         finish();
+                    } else
+                    {
+                        Log.e("TAG", "2." + response.code());
                     }
-                    Toast.makeText(SignIn.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(SignIn.this, "Bạn đã nhập sai thông tin Tài khoản hoặc Mật khẩu", Toast.LENGTH_SHORT).show();
                 }

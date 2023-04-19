@@ -140,12 +140,13 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                     recruitmentInfoList = response.body();
                     RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
                     rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
+                    Log.e("TAG", "1." + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
-
+                Log.e("TAG", "c." + t.getMessage());
             }
         });
 
