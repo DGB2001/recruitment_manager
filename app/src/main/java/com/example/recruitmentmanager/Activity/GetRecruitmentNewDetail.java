@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,17 +24,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetRecruitmentNewDetail extends AppCompatActivity {
-Button btnUngTuyen;
-TextView tvtitle, tvcompanyName, tvSalary, tvQuantity, tvexpiredAt, tvtechnical, tvlevel, tvdecription;
+    Button btnUngTuyen;
+    TextView tvtitle, tvcompanyName, tvSalary, tvQuantity, tvexpiredAt, tvtechnical, tvlevel, tvdecription;
+    int idRecruitmentNews = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_recruitment_news_detail);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
         btnUngTuyen = findViewById(R.id.apply_button);
         tvcompanyName = findViewById(R.id.job_companyname);
         tvdecription = findViewById(R.id.job_desription);
@@ -43,21 +47,20 @@ TextView tvtitle, tvcompanyName, tvSalary, tvQuantity, tvexpiredAt, tvtechnical,
         tvtechnical = findViewById(R.id.job_technical);
         tvtitle = findViewById(R.id.job_title);
         tvSalary = findViewById(R.id.job_salary);
-
-
+        idRecruitmentNews = getIntent().getIntExtra("idRecruitmentNews", -1);
 
         getData();
     }
 
     private void getData() {
         ApiService apiService = ApiUtils.getAPIService();
-        Call<RecruitmentInfo> recruitmentInfo = apiService.getRecruitmentNewDetail(1);
+        Call<RecruitmentInfo> recruitmentInfo = apiService.getRecruitmentNewDetail(idRecruitmentNews);
         recruitmentInfo.enqueue(new Callback<RecruitmentInfo>() {
             @Override
             public void onResponse(Call<RecruitmentInfo> call, Response<RecruitmentInfo> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     RecruitmentInfo recruitmentInfo = response.body();
-                    if(recruitmentInfo != null){
+                    if (recruitmentInfo != null) {
                         tvtitle.setText(recruitmentInfo.getTitle().toString());
                         tvcompanyName.setText(recruitmentInfo.getEmployer().getCompany_name().toString());
                         tvdecription.setText(recruitmentInfo.getDescription().toString());
@@ -66,19 +69,16 @@ TextView tvtitle, tvcompanyName, tvSalary, tvQuantity, tvexpiredAt, tvtechnical,
                         tvtechnical.setText(recruitmentInfo.getMaster_technical().getName().toString());
                         tvlevel.setText(recruitmentInfo.getMaster_level().getName().toString());
                         tvQuantity.setText(String.valueOf(recruitmentInfo.getQuantity()));
-
                     }
                     btnUngTuyen.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(GetRecruitmentNewDetail.this, CreateApplicationActivity.class);
-                            intent.putExtra("id",recruitmentInfo.getId() );
+                            intent.putExtra("id", recruitmentInfo.getId());
                             startActivity(intent);
                         }
                     });
-
-
                 }
             }
 
@@ -89,6 +89,7 @@ TextView tvtitle, tvcompanyName, tvSalary, tvQuantity, tvexpiredAt, tvtechnical,
         });
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
