@@ -1,5 +1,6 @@
 package com.example.recruitmentmanager.Data;
 
+import com.example.recruitmentmanager.Model.ApplicationResponse;
 import com.example.recruitmentmanager.Model.AuthLoginResponse;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
 
@@ -24,4 +25,13 @@ public interface ApiService {
 
     @GET("recruitment-news")
     Call<List<RecruitmentInfo>> getRecruitmentNewsList();
+
+    @POST("application")
+    @FormUrlEncoded
+    Call<ApplicationResponse> createApplicationData(@Field("candidate_id") int  candidate_id,
+                                         @Field("master_technical_id") int master_technical_id,
+                                         @Field("master_level_id") int master_level_id,
+                                         @Field("recruitment_news_id") int recruitment_news_id,
+                                         @Field("title") String title,
+                                         @Field("content") String content);
 }

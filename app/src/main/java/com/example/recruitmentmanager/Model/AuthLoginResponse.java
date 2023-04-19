@@ -13,6 +13,7 @@ public class AuthLoginResponse {
         this.candidate_id = candidate_id;
         this.employer_id = employer_id;
     }
+
     public int getEmployer_id() {
         return employer_id;
     }

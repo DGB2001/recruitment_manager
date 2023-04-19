@@ -75,7 +75,8 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(GetRecruitmentNewDetail.this, CreateApplicationActivity.class);
-                            intent.putExtra("id", recruitmentInfo.getId());
+                            intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
+                            intent.putExtra("tittleRecruitmentNews",recruitmentInfo.getTitle());
                             startActivity(intent);
                         }
                     });
@@ -84,7 +85,7 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RecruitmentInfo> call, Throwable t) {
-                Log.e("TAG", "c." + t.getMessage());
+                Log.e("TAG", "err." + t.getMessage());
             }
         });
 
