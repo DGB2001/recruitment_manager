@@ -28,7 +28,7 @@
 
 
     <TextView
-        android:id="@+id/job_description"
+        android:id="@+id/job_companyname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -36,7 +36,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/job_description1"
+        android:id="@+id/job_salary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -44,7 +44,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/job_description2"
+        android:id="@+id/job_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -52,7 +52,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/job_description3"
+        android:id="@+id/job_expired_at"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -60,7 +60,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/job_description4"
+        android:id="@+id/job_technical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -68,7 +68,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/job_description5"
+        android:id="@+id/job_level"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -76,7 +76,7 @@
         android:textSize="16sp" />
     <!-- Yêu cầu công việc -->
     <TextView
-        android:id="@+id/job_requirements"
+        android:id="@+id/job_desription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
