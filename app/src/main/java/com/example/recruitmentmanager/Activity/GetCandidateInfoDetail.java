@@ -26,9 +26,9 @@ public class GetCandidateInfoDetail extends AppCompatActivity {
         btnupdate = findViewById(R.id.btnUpdate);
         sharedPreferencesManager = new SharedPreferencesManager(this);
 
-        tvemail.setText(sharedPreferencesManager.getUser().getEmail());
-        tvrole.setText(sharedPreferencesManager.getUser().getRole());
-        tvstatus.setText(sharedPreferencesManager.getUser().getStatus());
+        tvemail.setText(sharedPreferencesManager.getUserAuthLogin().getEmail());
+        tvrole.setText(sharedPreferencesManager.getUserAuthLogin().getRole());
+        tvstatus.setText(sharedPreferencesManager.getUserAuthLogin().getStatus());
 
 
     }
