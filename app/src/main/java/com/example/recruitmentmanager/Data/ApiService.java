@@ -2,6 +2,7 @@ package com.example.recruitmentmanager.Data;
 
 import com.example.recruitmentmanager.Model.ApplicationResponse;
 import com.example.recruitmentmanager.Model.AuthLoginResponse;
+import com.example.recruitmentmanager.Model.EmployerInfo;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
 
 import java.util.List;
@@ -20,11 +21,11 @@ public interface ApiService {
     Call<AuthLoginResponse> SignInData(@Field("email") String email,
                                        @Field("password") String password);
 
-    @GET("recruitment-news/{id}")
-    Call<RecruitmentInfo> getRecruitmentNewDetail (@Path("id") int id);
-
     @GET("recruitment-news")
     Call<List<RecruitmentInfo>> getRecruitmentNewsList();
+
+    @GET("recruitment-news/{id}")
+    Call<RecruitmentInfo> getRecruitmentNewDetail (@Path("id") int id);
 
     @POST("application")
     @FormUrlEncoded
@@ -34,4 +35,7 @@ public interface ApiService {
                                          @Field("recruitment_news_id") int recruitment_news_id,
                                          @Field("title") String title,
                                          @Field("content") String content);
+
+    @GET("employers")
+    Call<List<EmployerInfo>> getEmployerList();
 }
