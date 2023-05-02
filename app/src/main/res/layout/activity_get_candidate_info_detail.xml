@@ -23,8 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,66 +44,136 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                <TextView
+                    android:id="@+id/namelLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="Họ và tên"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/tvName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/namelLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:padding="5dp"
+                    android:text="Kiều Hoàng Dương" />
 
                 <TextView
                     android:id="@+id/emailLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="24dp"
-                    android:text="Email:" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvName"
+                    android:layout_marginTop="9dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="email"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
 
                 <EditText
                     android:id="@+id/tvEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_toRightOf="@id/emailLabel" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/emailLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:padding="5dp"
+                    android:text="meomeomeo@gmail.com" />
 
                 <TextView
-                    android:id="@+id/roleLabel"
+                    android:id="@+id/phoneLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_below="@id/emailLabel"
-                    android:layout_marginTop="24dp"
-                    android:text="Role:" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvEmail"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="số điện thoại"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/tvPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phoneLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:padding="5dp"
+                    android:text="0123456789" />
+
+                <TextView
+                    android:id="@+id/addressLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvPhone"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="địa chỉ"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/tvAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/addressLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:padding="5dp"
+                    android:text="96 Định Công" />
+
+                <TextView
+                    android:id="@+id/typeAccLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvAddress"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="Loại tài khoản"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
 
                 <EditText
                     android:id="@+id/tvRole"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_below="@id/emailLabel"
-                    android:layout_marginTop="24dp"
-                    android:layout_toRightOf="@id/roleLabel"
-                    android:enabled="false"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/typeAccLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:editable="false"
+                    android:padding="5dp"
+                    android:text="Ứng viên" />
 
                 <TextView
                     android:id="@+id/statusLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_below="@id/roleLabel"
-                    android:layout_marginTop="24dp"
-                    android:text="Status:" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvRole"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="Trạng thái"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
 
                 <EditText
                     android:id="@+id/tvStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_below="@id/roleLabel"
-                    android:layout_marginTop="24dp"
-                    android:layout_toRightOf="@id/statusLabel"
-                    android:enabled="false"/>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnUpdate"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvStatus"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginTop="16dp"
-                    android:background="#5C73F1"
-                    android:textColor="#fff"
-                    android:text="Cập nhật" />
+                    android:layout_below="@id/statusLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:editable="false"
+                    android:padding="5dp"
+                    android:text="Hoạt động" />
+
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnDelete"
@@ -113,18 +181,27 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvStatus"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginTop="17dp"
-                    android:background="#DF2D2D"
-                    android:textColor="#fff"
-                    android:layout_marginEnd="69dp"
-                    android:text="Delete" />
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:background="#F44336"
+                    android:fontFamily="@font/archivo_bold"
+                    android:padding="4dp"
+                    android:text="xóa tài khoản ?"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnUpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btnDelete"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_strip_round"
+                    android:text="cập nhật"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
 
             </RelativeLayout>
-
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
