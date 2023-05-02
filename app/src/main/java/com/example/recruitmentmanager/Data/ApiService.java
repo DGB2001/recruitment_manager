@@ -4,6 +4,7 @@ import com.example.recruitmentmanager.Model.ApplicationResponse;
 import com.example.recruitmentmanager.Model.AuthLoginResponse;
 import com.example.recruitmentmanager.Model.EmployerInfo;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
+import com.example.recruitmentmanager.Model.User;
 
 import java.util.List;
 
@@ -36,6 +37,11 @@ public interface ApiService {
                                          @Field("title") String title,
                                          @Field("content") String content);
 
+
     @GET("employers")
     Call<List<EmployerInfo>> getEmployerList();
+
+    @GET("candidates/{id}")
+    Call<User> getCandidateDetail (@Path("id") int id);
+
 }
