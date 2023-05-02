@@ -31,10 +31,6 @@ public class RecruitmentNewsAdapter extends RecyclerView.Adapter<RecruitmentNews
         this.context = Context;
     }
 
-    public RecruitmentNewsAdapter(List<RecruitmentInfo> recruitmentInfoList) {
-        this.recruitmentInfoList = recruitmentInfoList;
-    }
-
     @NonNull
     @Override
     public RecruitmentNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -101,7 +97,6 @@ public class RecruitmentNewsAdapter extends RecyclerView.Adapter<RecruitmentNews
             img_salary = itemView.findViewById(R.id.img_salary);
             img_quantity = itemView.findViewById(R.id.img_quantity);
             img_time = itemView.findViewById(R.id.img_time);
-
         }
     }
 }

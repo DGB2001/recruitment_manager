@@ -48,7 +48,9 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_get_recruitment_news_list);
+
         AnhXa();
+        getRecruitmentNewsList();
         setOnClick();
 
         /********Toolbar********/
@@ -72,7 +74,6 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         toolbar = findViewById(R.id.toolbar);
         rc_RecruitmentNewsList = findViewById(R.id.rc_RecruitmentNewsList);
         recruitmentInfoList = new ArrayList<>();
-        getRecruitmentNewsList();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rc_RecruitmentNewsList.setLayoutManager(linearLayoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -84,13 +85,25 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         nav_view.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    public void getRecruitmentNewsList() {
+        ApiService apiService = ApiUtils.getAPIService();
+        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentNewsList();
+        recruitmentNewsListCall.enqueue(new Callback<List<RecruitmentInfo>>() {
+            @Override
+            public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
+                if (response.isSuccessful()) {
+                    recruitmentInfoList = response.body();
+                    RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
+                    rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
+                    Log.e("TAG", "1." + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
+                Log.e("TAG", "c." + t.getMessage());
+            }
+        });
     }
 
     @Override
@@ -115,6 +128,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
             case R.id.menu_candidate_account:
                 intent = new Intent(GetRecruitmentNewsList.this, GetCandidateInfoDetail.class);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.menu_candidate_logout:
@@ -132,25 +146,5 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         return true;
     }
 
-    public void getRecruitmentNewsList() {
-        ApiService apiService = ApiUtils.getAPIService();
-        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentNewsList();
-        recruitmentNewsListCall.enqueue(new Callback<List<RecruitmentInfo>>() {
-            @Override
-            public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
-                if (response.isSuccessful()) {
-                    recruitmentInfoList = response.body();
-                    RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
-                    rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
-                    Log.e("TAG", "1." + response.message());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
-                Log.e("TAG", "c." + t.getMessage());
-            }
-        });
-
-    }
 }

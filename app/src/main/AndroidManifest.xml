@@ -29,17 +29,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Activity.MainActivity"
             android:exported="false" />
+
         <activity
             android:name=".Activity.GetRecruitmentNewsList"
             android:exported="false" />
+
         <activity
             android:name=".Activity.StartScreen"
             android:exported="false" />
+
         <activity
             android:name=".Activity.GetRecruitmentNewDetail"
+            android:exported="false" />
+
+        <activity
+            android:name=".Activity.GetEmployerList"
             android:exported="false" />
 
         <meta-data
