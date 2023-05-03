@@ -24,6 +24,7 @@ import com.example.recruitmentmanager.Adapter.SharedPreferencesManager;
 import com.example.recruitmentmanager.Data.ApiService;
 import com.example.recruitmentmanager.Data.ApiUtils;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
+import com.example.recruitmentmanager.Model.User;
 import com.example.recruitmentmanager.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -87,7 +88,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
 
     public void getRecruitmentNewsList() {
         ApiService apiService = ApiUtils.getAPIService();
-        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentNewsList();
+        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentNewsList("desc");
         recruitmentNewsListCall.enqueue(new Callback<List<RecruitmentInfo>>() {
             @Override
             public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {

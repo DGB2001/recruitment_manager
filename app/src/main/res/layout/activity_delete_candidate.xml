@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.DeleteCandidate">
+
+    <ImageView
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="450px"
+        android:background="#59a3d8"
+        tools:srcCompat="@drawable/banner_delete" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/banner"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/lubalin_demi"
+        android:padding="10dp"
+        android:text="Ủa tính nghỉ thiệt hả?"
+        android:textColor="@color/black"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:fontFamily="@font/lubalin_demi"
+        android:padding="15dp"
+        android:text="Lưu ý: Tài khoản sau khi xóa sẽ không thể phục hồi lại được."
+        android:textColor="#FF5252"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv2"
+        android:fontFamily="@font/bangers_medium"
+        android:padding="15dp"
+        android:text="Bạn sẽ mất tất cả thông tin và dữ liệu của ứng dụng.Sau khi xóa tài khoản, bạn sẽ không thể dùng lại email của tài khoản này để tạo tài khoản mới luôn nha."
+        android:textColor="#000"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv3"
+        android:fontFamily="@font/bangers_medium"
+        android:padding="15dp"
+        android:text="Bộ phận CSKH sẽ không thể hỗ trợ bạn phục hồi lại tài khoản."
+        android:textColor="#000"
+        android:textSize="18dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv4"
+        android:layout_margin="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_btn_blue_corner_10_1"
+        android:text="thôi không xóa nữa"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnCancel"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/bg_white_corner_border_grey"
+        android:text="xóa tài khoản ngay"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
+
+
+</RelativeLayout>
