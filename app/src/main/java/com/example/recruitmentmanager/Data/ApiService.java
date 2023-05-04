@@ -1,5 +1,6 @@
 package com.example.recruitmentmanager.Data;
 
+import com.example.recruitmentmanager.Model.ApplicationInfo;
 import com.example.recruitmentmanager.Model.ApplicationResponse;
 import com.example.recruitmentmanager.Model.AuthLoginResponse;
 import com.example.recruitmentmanager.Model.EmployerInfo;
@@ -29,11 +30,10 @@ public interface ApiService {
     @GET("recruitment-news")
     Call<List<RecruitmentInfo>> getRecruitmentNewsList(@Query("order_by") String order_by);
 
-
     @GET("recruitment-news/{id}")
     Call<RecruitmentInfo> getRecruitmentNewDetail (@Path("id") int id);
 
-    @POST("application")
+    @POST("applications")
     @FormUrlEncoded
     Call<ApplicationResponse> createApplicationData(@Field("candidate_id") int  candidate_id,
                                          @Field("master_technical_id") int master_technical_id,
@@ -41,18 +41,21 @@ public interface ApiService {
                                          @Field("recruitment_news_id") int recruitment_news_id,
                                          @Field("title") String title,
                                          @Field("content") String content);
-
+                                         
     @GET("employers")
     Call<List<EmployerInfo>> getEmployerList();
 
     @GET("candidates/{id}")
     Call<User> getCandidateDetail (@Path("id") int id);
-
+    
     @PUT("candidates/{id}")
     Call<User> updateCandidateDetail (@Path("id") int id, @Body User user);
 
     @DELETE("candidates/{id}")
     Call<Void> deleteCandidate (@Path("id") int id);
 
-
+    @GET("candidates/{candidateId}/applications")
+    Call<List<ApplicationInfo>> getHistoryApplication (@Path("candidateId") int candidate_id);
+    
+   
 }

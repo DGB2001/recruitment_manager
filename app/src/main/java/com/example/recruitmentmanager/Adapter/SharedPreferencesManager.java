@@ -2,6 +2,7 @@ package com.example.recruitmentmanager.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.recruitmentmanager.Model.AuthLoginResponse;
 
@@ -15,7 +16,7 @@ public class SharedPreferencesManager {
         this.context = context;
     }
 
-    public void saveUser(AuthLoginResponse user){
+    public void saveUser(AuthLoginResponse user) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.putInt("id", user.getId());
@@ -28,30 +29,21 @@ public class SharedPreferencesManager {
         editor.apply();
     }
 
-    public void saveUserCandidate(AuthLoginResponse user) {
+    public void rememberUserLogin(String emailLogin, String passwordLogin) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.putInt("id", user.getId());
-        editor.putString("email", user.getEmail());
-        editor.putString("role", user.getRole());
-        editor.putString("status", user.getStatus());
-        editor.putInt("candidate_id;", user.getCandidate_id());
-        editor.putInt("employer_id", user.getEmployer_id());
-        editor.putBoolean("signedIn", true);
+        editor.putString("email_login", emailLogin);
+        editor.putString("password_login", passwordLogin);
         editor.apply();
     }
 
-    public void saveUserEmployer(AuthLoginResponse user) {
+    public String[] getRememberUserLogin() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        editor.putInt("id", user.getId());
-        editor.putString("email", user.getEmail());
-        editor.putString("role", user.getRole());
-        editor.putString("status", user.getStatus());
-        editor.putInt("employer_id", user.getEmployer_id());
-        editor.putBoolean("signedIn", true);
-        editor.apply();
+        Log.e("Logintest", "email: " + sharedPreferences.getString("email_login", ""));
+        Log.e("Logintest", "pass: " + sharedPreferences.getString("password_login", ""));
+        return new String[]{sharedPreferences.getString("email_login", ""), sharedPreferences.getString("password_login", "")};
     }
+
 
     public boolean isSignedIn() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -69,12 +61,17 @@ public class SharedPreferencesManager {
     }
 
 
-
-    public void signOut(){
+    public void signOut() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
+        editor.remove("id");
+        editor.remove("email");
+        editor.remove("role");
+        editor.remove("status");
+        editor.remove("candidate_id");
+        editor.remove("employer_id");
+        editor.remove("signedIn");
+        editor.commit();
+       // editor.apply();
     }
-
 }

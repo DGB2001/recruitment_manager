@@ -124,6 +124,12 @@ public class GetEmployerList extends AppCompatActivity implements NavigationView
             case R.id.menu_candidate_nhatuyendung:
                 break;
 
+            case R.id.menu_candidate_history:
+                intent = new Intent(GetEmployerList.this, GetHistoryApplication.class);
+                startActivity(intent);
+                finish();
+                break;
+
             case R.id.menu_candidate_thongtin:
                 break;
 

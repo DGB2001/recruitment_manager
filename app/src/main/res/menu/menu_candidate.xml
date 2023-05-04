@@ -4,11 +4,6 @@
     <group android:checkableBehavior="single">
         <item android:title="Menu">
             <menu>
-<!--                <item-->
-<!--                    android:id="@+id/menu_candidate_home"-->
-<!--                    android:icon="@drawable/ic_home_menu_candidate"-->
-<!--                    android:title="Trang chủ" />-->
-
                 <item
                     android:id="@+id/menu_candidate_tintuyendung"
                     android:icon="@drawable/ic_tintuyendung_menu_candidate"
@@ -18,6 +13,11 @@
                     android:id="@+id/menu_candidate_nhatuyendung"
                     android:icon="@drawable/ic_nhatuyendung_menu_candidate"
                     android:title="Nhà tuyển dụng" />
+
+                <item
+                    android:id="@+id/menu_candidate_history"
+                    android:icon="@drawable/ic_application_menu_candidate"
+                    android:title="Lịch sử ứng tuyển" />
             </menu>
         </item>
     </group>

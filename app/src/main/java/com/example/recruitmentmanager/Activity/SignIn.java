@@ -29,6 +29,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     SharedPreferencesManager sharedPreferences;
 
     AuthLoginResponse authLoginResponseUser;
+    String [] rememberLoginArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,26 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_sign_in);
         AnhXa();
         setOnClick();
+//        String username = login_username_edt.getText().toString();
+//        String password = login_password_edt.getText().toString();
+//        sharedPreferences.rememberUserLogin(username,password);
+
+        rememberLoginArray=sharedPreferences.getRememberUserLogin();
+        Log.e("test", "login " + rememberLoginArray[0]);
+
+        login_username_edt.setText(rememberLoginArray[0]);
+        login_password_edt.setText(rememberLoginArray[1]);
+
+        cb_remember_me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = login_username_edt.getText().toString();
+                String password = login_password_edt.getText().toString();
+                sharedPreferences.rememberUserLogin(username,password);
+            }
+        });
+
+
     }
 
     private void AnhXa() {
@@ -45,7 +66,25 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         login_password_edt = findViewById(R.id.login_password_edt);
         login_username_edt = findViewById(R.id.login_username_edt);
         cb_remember_me = findViewById(R.id.cb_remember_me);
-        sharedPreferences=new SharedPreferencesManager(SignIn.this);
+        sharedPreferences = new SharedPreferencesManager(SignIn.this);
+
+    }
+
+    private void checkBox(){
+        String username = login_username_edt.getText().toString();
+        String password = login_password_edt.getText().toString();
+        if (username.isEmpty()) {
+            login_username_edt.requestFocus();
+            login_username_edt.setError("Vui lòng điền Tên tài khoản của bạn");
+        }
+
+        if (password.isEmpty()) {
+            login_password_edt.requestFocus();
+            login_password_edt.setError("Vui lòng điền Mật khẩu của bạn");
+        }
+        if(cb_remember_me.isChecked()){
+            sharedPreferences.rememberUserLogin(username,password);
+        }
     }
 
     private void setOnClick() {
@@ -73,21 +112,10 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
             public void onResponse(Call<AuthLoginResponse> call, Response<AuthLoginResponse> response) {
                 if (response.isSuccessful()) {
                     AuthLoginResponse authLogin = response.body();
-                    Log.e("TAG", "candidateid." + authLogin.getCandidate_id());
-
-                    if(cb_remember_me.isChecked()==true){
-                        sharedPreferences.saveUser(authLogin);
-                        Log.e("TAG", "candidateid." + sharedPreferences.getUserAuthLogin().getCandidate_id());
-                        Log.e("TAG", "userid." + sharedPreferences.getUserAuthLogin().getId());
-                        Log.e("TAG", "email." + sharedPreferences.getUserAuthLogin().getEmail());
-                        Log.e("TAG", "role." + sharedPreferences.getUserAuthLogin().getRole());
-                        Intent intent = new Intent(SignIn.this, GetRecruitmentNewsList.class);
-                        startActivity(intent);
-                        finish();
-                    } else
-                    {
-                        Log.e("TAG", "2." + response.code());
-                    }
+                    sharedPreferences.saveUser(authLogin);
+                    Intent intent = new Intent(SignIn.this, GetRecruitmentNewsList.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(SignIn.this, "Bạn đã nhập sai thông tin Tài khoản hoặc Mật khẩu", Toast.LENGTH_SHORT).show();
                 }
@@ -111,7 +139,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
                 break;
 
             case R.id.btnSignUp:
-                intent = new Intent(SignIn.this,StartScreen.class);
+                intent = new Intent(SignIn.this, StartScreen.class);
                 startActivity(intent);
                 finish();
 
