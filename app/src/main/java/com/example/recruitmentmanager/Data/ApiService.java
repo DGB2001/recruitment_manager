@@ -1,5 +1,6 @@
 package com.example.recruitmentmanager.Data;
 
+import com.example.recruitmentmanager.Model.ApplicationInfo;
 import com.example.recruitmentmanager.Model.ApplicationResponse;
 import com.example.recruitmentmanager.Model.AuthLoginResponse;
 import com.example.recruitmentmanager.Model.EmployerInfo;
@@ -23,7 +24,7 @@ public interface ApiService {
                                        @Field("password") String password);
 
     @GET("recruitment-news")
-    Call<List<RecruitmentInfo>> getRecruitmentNewsList();
+    Call<List<RecruitmentInfo>> getRecruitmentNewsList(@Query("order_by") String order_by);
 
     @GET("recruitment-news/{id}")
     Call<RecruitmentInfo> getRecruitmentNewDetail (@Path("id") int id);
@@ -44,4 +45,6 @@ public interface ApiService {
     @GET("candidates/{id}")
     Call<User> getCandidateDetail (@Path("id") int id);
 
+    @GET("candidates/{candidateId}/applications")
+    Call<List<ApplicationInfo>> getHistoryApplication (@Path("candidateId") int candidate_id);
 }

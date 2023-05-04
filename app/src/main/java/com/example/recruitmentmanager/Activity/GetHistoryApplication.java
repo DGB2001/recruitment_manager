@@ -15,14 +15,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.recruitmentmanager.Adapter.HistoryApplicationAdapter;
 import com.example.recruitmentmanager.Adapter.RecruitmentNewsAdapter;
 import com.example.recruitmentmanager.Adapter.SharedPreferencesManager;
 import com.example.recruitmentmanager.Data.ApiService;
 import com.example.recruitmentmanager.Data.ApiUtils;
+import com.example.recruitmentmanager.Model.ApplicationInfo;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
 import com.example.recruitmentmanager.R;
 import com.google.android.material.navigation.NavigationView;
@@ -34,24 +35,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetRecruitmentNewsList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class GetHistoryApplication extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView nav_view;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     SharedPreferencesManager sharedPreferences;
-    RecyclerView rc_RecruitmentNewsList;
-    List<RecruitmentInfo> recruitmentInfoList;
+    RecyclerView rcvHistoryApplication;
+    List<ApplicationInfo> applicationInfoList;
 
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_get_recruitment_news_list);
+        setContentView(R.layout.activity_get_history_application);
 
         AnhXa();
-        getRecruitmentNewsList();
         setOnClick();
+        getHistoryApplication();
+        id=sharedPreferences.getUserAuthLogin().getCandidate_id();
 
         /********Toolbar********/
         setSupportActionBar(toolbar);
@@ -65,64 +68,71 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
 
         /********Hide or show menu items********/
         Menu menu = nav_view.getMenu();
-
     }
 
     private void AnhXa() {
-        drawerLayout = findViewById(R.id.drawerlayout);
+        drawerLayout = findViewById(R.id.drawerLayout1);
         nav_view = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
-        rc_RecruitmentNewsList = findViewById(R.id.rc_RecruitmentNewsList);
-        recruitmentInfoList = new ArrayList<>();
+        rcvHistoryApplication = findViewById(R.id.rcvHistoryApplication);
+        applicationInfoList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        rc_RecruitmentNewsList.setLayoutManager(linearLayoutManager);
+        rcvHistoryApplication.setLayoutManager(linearLayoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        rc_RecruitmentNewsList.addItemDecoration(dividerItemDecoration);
-        sharedPreferences = new SharedPreferencesManager(GetRecruitmentNewsList.this);
+        rcvHistoryApplication.addItemDecoration(dividerItemDecoration);
+        sharedPreferences = new SharedPreferencesManager(GetHistoryApplication.this);
     }
 
     private void setOnClick() {
         nav_view.setNavigationItemSelectedListener(this);
     }
 
-    public void getRecruitmentNewsList() {
+    private void getHistoryApplication() {
         ApiService apiService = ApiUtils.getAPIService();
-        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentNewsList("desc");
-        recruitmentNewsListCall.enqueue(new Callback<List<RecruitmentInfo>>() {
+        Call<List<ApplicationInfo>> applicationistCall = apiService.getHistoryApplication(sharedPreferences.getUserAuthLogin().getCandidate_id());
+        applicationistCall.enqueue(new Callback<List<ApplicationInfo>>() {
             @Override
-            public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
+            public void onResponse(Call<List<ApplicationInfo>> call, Response<List<ApplicationInfo>> response) {
                 if (response.isSuccessful()) {
-                    recruitmentInfoList = response.body();
-                    RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
-                    rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
-                    Log.e("TAG", "1." + response.message());
+                    applicationInfoList = response.body();
+                    HistoryApplicationAdapter historyApplicationAdapter = new HistoryApplicationAdapter(GetHistoryApplication.this, applicationInfoList);
+                    rcvHistoryApplication.setAdapter(historyApplicationAdapter);
+                    Log.e("TAG", "1." + applicationInfoList.size());
+
+                }
+                else {
+                    Log.e("TAG", "2." + response.message());
+                    Log.e("TAG", "0." + sharedPreferences.getUserAuthLogin().getCandidate_id());
+
+
                 }
             }
 
             @Override
-            public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
-                Log.e("TAG", "c." + t.getMessage());
+            public void onFailure(Call<List<ApplicationInfo>> call, Throwable t) {
+                Log.e("TAG", "3." + t.getMessage());
+
             }
         });
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Menu menu = nav_view.getMenu();
         Intent intent;
-        switch (menuItem.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.menu_candidate_tintuyendung:
+                intent = new Intent(GetHistoryApplication.this, GetRecruitmentNewsList.class);
+                startActivity(intent);
+                finish();
                 break;
 
             case R.id.menu_candidate_nhatuyendung:
-                intent = new Intent(GetRecruitmentNewsList.this, GetEmployerList.class);
+                intent = new Intent(GetHistoryApplication.this, GetEmployerList.class);
                 startActivity(intent);
                 break;
 
             case R.id.menu_candidate_history:
-                intent = new Intent(GetRecruitmentNewsList.this, GetHistoryApplication.class);
-                startActivity(intent);
-                finish();
                 break;
 
             case R.id.menu_candidate_thongtin:
@@ -132,17 +142,17 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 break;
 
             case R.id.menu_candidate_account:
-                intent = new Intent(GetRecruitmentNewsList.this, GetCandidateInfoDetail.class);
+                intent = new Intent(GetHistoryApplication.this, GetCandidateInfoDetail.class);
                 startActivity(intent);
                 finish();
                 break;
 
             case R.id.menu_candidate_logout:
                 sharedPreferences.signOut();
-                intent = new Intent(GetRecruitmentNewsList.this, SignIn.class);
+                intent = new Intent(GetHistoryApplication.this, SignIn.class);
                 startActivity(intent);
                 finish();
-                Toast.makeText(GetRecruitmentNewsList.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetHistoryApplication.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                 break;
 
             default:
