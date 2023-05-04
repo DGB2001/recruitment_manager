@@ -33,7 +33,7 @@ public interface ApiService {
     @GET("recruitment-news/{id}")
     Call<RecruitmentInfo> getRecruitmentNewDetail (@Path("id") int id);
 
-    @POST("application")
+    @POST("applications")
     @FormUrlEncoded
     Call<ApplicationResponse> createApplicationData(@Field("candidate_id") int  candidate_id,
                                          @Field("master_technical_id") int master_technical_id,

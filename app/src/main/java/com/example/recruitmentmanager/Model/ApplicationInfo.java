@@ -2,7 +2,7 @@ package com.example.recruitmentmanager.Model;
 
 public class ApplicationInfo {
     String title;
-    int result;
+    Integer result;
     RecruitmentInfo recruitment_news;
 
     public RecruitmentInfo getRecruitment_news() {
@@ -21,11 +21,11 @@ public class ApplicationInfo {
         this.title = title;
     }
 
-    public int getResult() {
+    public Integer getResult() {
         return result;
     }
 
-    public void setResult(int result) {
+    public void setResult(Integer result) {
         this.result = result;
     }
 
