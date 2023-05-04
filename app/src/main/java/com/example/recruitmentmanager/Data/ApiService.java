@@ -10,10 +10,14 @@ import com.example.recruitmentmanager.Model.User;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -37,14 +41,21 @@ public interface ApiService {
                                          @Field("recruitment_news_id") int recruitment_news_id,
                                          @Field("title") String title,
                                          @Field("content") String content);
-
-
+                                         
     @GET("employers")
     Call<List<EmployerInfo>> getEmployerList();
 
     @GET("candidates/{id}")
     Call<User> getCandidateDetail (@Path("id") int id);
+    
+    @PUT("candidates/{id}")
+    Call<User> updateCandidateDetail (@Path("id") int id, @Body User user);
+
+    @DELETE("candidates/{id}")
+    Call<Void> deleteCandidate (@Path("id") int id);
 
     @GET("candidates/{candidateId}/applications")
     Call<List<ApplicationInfo>> getHistoryApplication (@Path("candidateId") int candidate_id);
+    
+   
 }

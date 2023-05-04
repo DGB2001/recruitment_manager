@@ -24,6 +24,7 @@ import com.example.recruitmentmanager.Adapter.SharedPreferencesManager;
 import com.example.recruitmentmanager.Data.ApiService;
 import com.example.recruitmentmanager.Data.ApiUtils;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
+import com.example.recruitmentmanager.Model.User;
 import com.example.recruitmentmanager.R;
 import com.google.android.material.navigation.NavigationView;
 
