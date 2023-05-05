@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#338E9A"
-        app:title="Chi tiết tin tuyển dụng"
-        app:titleTextColor="#f20">
-
-    </androidx.appcompat.widget.Toolbar>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,129 +19,156 @@
                 android:id="@+id/job_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Title"
+                android:fontFamily="@font/bangers_medium"
+                android:padding="15dp"
+                android:text="Tên công việc"
                 android:textAlignment="center"
-                android:textColor="#151313"
-                android:textSize="24sp" />
+                android:textAllCaps="true"
+                android:textColor="#000"
+                android:textSize="22dp"
+                android:textStyle="bold" />
 
             <!-- Mô tả công việc -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Công ty:"
-                android:layout_marginBottom="5dp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="CÔNG TY"
                 android:textAllCaps="true"
-                android:textColor="#151313"
-                android:textSize="20sp" />
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/job_companyname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Company Name"
-                android:textSize="16sp" />
+                android:background="@drawable/bg_strip_round_corner_10"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mức lương:"
-                android:layout_marginBottom="5dp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="Mức lương"
                 android:textAllCaps="true"
-                android:textColor="#151313"
-                android:textSize="20sp" />
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/job_salary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Salary"
-                android:textSize="16sp" />
+                android:background="@drawable/bg_strip_round_corner_10"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Số lượng:"
-                android:layout_marginBottom="5dp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="số lượng"
                 android:textAllCaps="true"
-                android:textColor="#151313"
-                android:textSize="20sp" />
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/job_quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Quantity"
-                android:textSize="16sp" />
+                android:background="@drawable/bg_strip_round_corner_10"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ngày hết hạn:"
-                android:layout_marginBottom="5dp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="ngày hết hạn"
                 android:textAllCaps="true"
-                android:textColor="#151313"
-                android:textSize="20sp" />
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/job_expired_at"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Expired_at"
-                android:textSize="16sp" />
+                android:background="@drawable/bg_strip_round_corner_10"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chuyên môn:"
-                android:layout_marginBottom="5dp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="chuyên môn"
                 android:textAllCaps="true"
-                android:textColor="#151313"
-                android:textSize="20sp" />
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/job_technical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Technical"
-                android:textSize="16sp" />
+                android:background="@drawable/bg_strip_round_corner_10"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Trình độ:"
-                android:layout_marginBottom="5dp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="trình độ"
                 android:textAllCaps="true"
-                android:textColor="#151313"
-                android:textSize="20sp" />
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/job_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Level"
-                android:textSize="16sp" />
+                android:background="@drawable/bg_strip_round_corner_10"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
             <!-- Yêu cầu công việc -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Yêu cầu công việc:"
-                android:layout_marginBottom="5dp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="yêu cầu công việc"
                 android:textAllCaps="true"
-                android:textColor="#151313"
-                android:textSize="20sp" />
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/job_desription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Description"
-                android:textSize="16sp" />
+                android:background="@drawable/bg_strip_round_corner_10"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
 
             <!-- Nút ứng tuyển -->
             <androidx.appcompat.widget.AppCompatButton
@@ -158,9 +176,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="#246BFD"
-                android:textColor="#fff"
+                android:background="@drawable/bg_btn_blue_corner_16"
                 android:text="Tạo đơn ứng tuyển"
+                android:textColor="#fff"
                 android:textSize="16sp" />
         </LinearLayout>
 
