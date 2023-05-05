@@ -127,9 +127,10 @@
             android:layout_below="@id/tv_time"
             android:layout_marginTop="4dp"
             android:background="@drawable/bg_strip_round"
+            android:padding="5dp"
             android:text="Technical"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/tv_level"
@@ -140,9 +141,10 @@
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@id/tv_technical"
             android:background="@drawable/bg_strip_round"
+            android:padding="5dp"
             android:text="Level"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
 
 
     </RelativeLayout>

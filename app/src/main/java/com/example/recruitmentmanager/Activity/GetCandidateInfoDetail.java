@@ -163,16 +163,13 @@ public class GetCandidateInfoDetail extends AppCompatActivity implements Navigat
                     } else {
                         spinnerGender.setSelection(1);
                     }
-                    Log.e("TAG", "1." + response.code());
                     Toast.makeText(GetCandidateInfoDetail.this, "thành công", Toast.LENGTH_SHORT).show();
                 }
-                else
-                    Log.e("TAG", "2." + response.code());
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.e("TAG", "3." + t.getMessage());
+                Log.e("onFailure", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -241,7 +238,7 @@ public class GetCandidateInfoDetail extends AppCompatActivity implements Navigat
                 break;
 
             case R.id.btnDelete:
-                intent=new Intent(this,DeleteCandidate.class);
+                intent = new Intent(this, DeleteCandidate.class);
                 startActivity(intent);
                 break;
 

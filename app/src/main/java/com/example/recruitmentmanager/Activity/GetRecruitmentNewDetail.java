@@ -33,11 +33,13 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_recruitment_news_detail);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
+        AnhXa();
+        idRecruitmentNews = getIntent().getIntExtra("idRecruitmentNews", -1);
+        getRecruitmentNewsDetail();
+    }
+
+    private void AnhXa() {
         btnUngTuyen = findViewById(R.id.apply_button);
         tvcompanyName = findViewById(R.id.job_companyname);
         tvdecription = findViewById(R.id.job_desription);
@@ -47,12 +49,9 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
         tvtechnical = findViewById(R.id.job_technical);
         tvtitle = findViewById(R.id.job_title);
         tvSalary = findViewById(R.id.job_salary);
-        idRecruitmentNews = getIntent().getIntExtra("idRecruitmentNews", -1);
-
-        getData();
     }
 
-    private void getData() {
+    private void getRecruitmentNewsDetail() {
         ApiService apiService = ApiUtils.getAPIService();
         Call<RecruitmentInfo> recruitmentInfo = apiService.getRecruitmentNewDetail(idRecruitmentNews);
         recruitmentInfo.enqueue(new Callback<RecruitmentInfo>() {
@@ -71,12 +70,13 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
                         tvQuantity.setText(String.valueOf(recruitmentInfo.getQuantity()));
                     }
                     btnUngTuyen.setOnClickListener(new View.OnClickListener() {
-
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(GetRecruitmentNewDetail.this, CreateApplicationActivity.class);
                             intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
-                            intent.putExtra("tittleRecruitmentNews",recruitmentInfo.getTitle());
+                            intent.putExtra("tittleRecruitmentNews", recruitmentInfo.getTitle());
+                            intent.putExtra("technicalRecruitmentNews", recruitmentInfo.getMaster_technical().getId());
+                            intent.putExtra("levelRecruitmentNews", recruitmentInfo.getMaster_level().getId());
                             startActivity(intent);
                         }
                     });
@@ -89,15 +89,6 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }

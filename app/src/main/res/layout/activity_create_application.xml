@@ -4,185 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
     android:orientation="vertical"
     tools:context=".Activity.CreateApplicationActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-
-    <ScrollView
-        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/home_view"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/home_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="vertical">
 
-                <RelativeLayout
+                <ImageView
+                    android:id="@+id/banner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
-
-                    <ImageView
-                        android:id="@+id/iv_anh"
-                        android:layout_width="150dp"
-                        android:layout_height="170dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:srcCompat="@drawable/ic_avt_application" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_chupanh"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_toEndOf="@id/iv_anh"
-                        android:background="@drawable/bg_btn_blue_corner_10"
-                        android:text="Chụp ảnh" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_chonanh"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/btn_chupanh"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_toEndOf="@id/iv_anh"
-                        android:background="@drawable/bg_btn_blue_corner_10"
-                        android:text="Chọn ảnh từ thư viện" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tv_recruitmentNewsName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tên công việc"
-                    android:textAllCaps="true"
-                    android:textAlignment="center"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                    android:textSize="22dp" />
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tiêu đề"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:gravity="left"/>
-
-                <EditText
-                    android:id="@+id/etTittle"
-                    android:background="@drawable/bg_white_corner_border_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:layout_marginTop="5dp"
-                    android:hint="Nhập tiêu đề của đơn ứng tuyển"/>
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mô tả"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:gravity="left"/>
-
-                <EditText
-                    android:id="@+id/etContent"
-                    android:background="@drawable/bg_white_corner_border_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:layout_marginTop="5dp"
-                    android:hint="Nhập mô tả"/>
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Trình độ"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:gravity="left"/>
-
-                <EditText
-                    android:id="@+id/etMaster_level"
-                    android:background="@drawable/bg_white_corner_border_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:layout_marginTop="5dp"
-                    android:hint="Nhập trình độ"/>
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lĩnh vực"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:gravity="left"/>
-
-                <EditText
-                    android:id="@+id/etMaster_technical"
-                    android:background="@drawable/bg_white_corner_border_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:layout_marginTop="5dp"
-                    android:hint="Nhập tên mặt hàng"/>
-
+                    android:layout_height="450px"
+                    android:background="#59a3d8"
+                    tools:srcCompat="@drawable/banner_create_application" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnHuy"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/tvTittle"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_btn_blue_corner_10"
-                        android:text="Hủy"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:padding="15dp"
+                        android:text="Tên công việc"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="#000"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnNopDon"
-                        android:layout_width="0dp"
+
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_btn_blue_corner_10"
-                        android:text="Nộp đơn"
+                        android:gravity="left"
+                        android:padding="10dp"
+                        android:text="Nội dung"
+                        android:textAllCaps="true"
                         android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_strip_round_corner_10"
+                        android:hint="Nhập mô tả"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:padding="10dp"
+                        android:text="Trình độ"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerMaster_level"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_strip_round_corner_10"
+                        android:enabled="false"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:padding="10dp"
+                        android:text="chuyên môn"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerMaster_technical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_strip_round_corner_10"
+                        android:enabled="false"
+                        android:padding="15dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnHuy"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_btn_blue_corner_10"
+                            android:text="Hủy"
+                            android:textColor="@color/white"
+                            android:textSize="17dp" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnNopDon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_btn_blue_corner_10"
+                            android:text="Nộp đơn"
+                            android:textColor="@color/white"
+                            android:textSize="17dp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
 
-
-    </ScrollView>
+        </ScrollView>
     </RelativeLayout>
 
 

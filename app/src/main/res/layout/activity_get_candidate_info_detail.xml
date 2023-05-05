@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".Activity.GetRecruitmentNewsList"
-    tools:openDrawer="start">
+    tools:openDrawer="">
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -32,14 +32,15 @@
                 android:id="@+id/toolbar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="#246BFD"
+                android:background="#59a3d8"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/ic_menu"
-                app:title="THÔNG TIN TÀI KHOẢN" />
+                app:title="THÔNG TIN TÀI KHOẢN"
+                app:titleTextColor="@color/white" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -106,8 +107,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/genderLabel"
                     android:layout_marginTop="10dp"
-                    android:padding="5dp"
-                    android:background="@drawable/bg_strip_round"/>
+                    android:background="@drawable/bg_strip_round"
+                    android:padding="5dp" />
 
                 <TextView
                     android:id="@+id/phoneLabel"

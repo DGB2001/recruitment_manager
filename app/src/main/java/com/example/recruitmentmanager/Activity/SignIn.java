@@ -18,6 +18,11 @@ import com.example.recruitmentmanager.Model.AuthLoginResponse;
 import com.example.recruitmentmanager.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,9 +32,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
     TextInputEditText login_username_edt, login_password_edt;
     CheckBox cb_remember_me;
     SharedPreferencesManager sharedPreferences;
-
-    AuthLoginResponse authLoginResponseUser;
-    String [] rememberLoginArray;
+    String[] rememberLoginArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +41,8 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_sign_in);
         AnhXa();
         setOnClick();
-//        String username = login_username_edt.getText().toString();
-//        String password = login_password_edt.getText().toString();
-//        sharedPreferences.rememberUserLogin(username,password);
 
-        rememberLoginArray=sharedPreferences.getRememberUserLogin();
-        Log.e("test", "login " + rememberLoginArray[0]);
-
+        rememberLoginArray = sharedPreferences.getRememberUserLogin();
         login_username_edt.setText(rememberLoginArray[0]);
         login_password_edt.setText(rememberLoginArray[1]);
 
@@ -53,7 +51,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
             public void onClick(View view) {
                 String username = login_username_edt.getText().toString();
                 String password = login_password_edt.getText().toString();
-                sharedPreferences.rememberUserLogin(username,password);
+                sharedPreferences.rememberUserLogin(username, password);
             }
         });
 
@@ -70,7 +68,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    private void checkBox(){
+    private void checkBox() {
         String username = login_username_edt.getText().toString();
         String password = login_password_edt.getText().toString();
         if (username.isEmpty()) {
@@ -82,8 +80,8 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
             login_password_edt.requestFocus();
             login_password_edt.setError("Vui lòng điền Mật khẩu của bạn");
         }
-        if(cb_remember_me.isChecked()){
-            sharedPreferences.rememberUserLogin(username,password);
+        if (cb_remember_me.isChecked()) {
+            sharedPreferences.rememberUserLogin(username, password);
         }
     }
 
@@ -117,16 +115,23 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(SignIn.this, "Bạn đã nhập sai thông tin Tài khoản hoặc Mật khẩu", Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONObject errorObject = new JSONObject(response.errorBody().string());
+                        JSONObject errorBody = errorObject.getJSONObject("errors");
+                        String errorMessage = errorBody.getString("message");
+                        String errorMessageWithoutQuotes = errorMessage.replaceAll("^\\[\"|\"\\]$", "");
+                        Toast.makeText(SignIn.this, errorMessageWithoutQuotes, Toast.LENGTH_SHORT).show();
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<AuthLoginResponse> call, Throwable t) {
-                Log.e("TAG", "c." + t.getMessage());
+                Log.e("onFailure", "onFailure: " + t.getMessage());
             }
         });
-
     }
 
 
@@ -142,10 +147,11 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
                 intent = new Intent(SignIn.this, StartScreen.class);
                 startActivity(intent);
                 finish();
+                break;
 
+            default:
                 break;
         }
-
     }
 
     @Override
