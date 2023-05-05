@@ -56,6 +56,9 @@ public interface ApiService {
 
     @GET("candidates/{candidateId}/applications")
     Call<List<ApplicationInfo>> getHistoryApplication (@Path("candidateId") int candidate_id);
+
+    @GET("recruitment-news/")
+    Call<List<RecruitmentInfo>> getRecruitmentEmployerList(@Query("employer_id") int employer_id, @Query("order_by") String order_by);
     
    
 }

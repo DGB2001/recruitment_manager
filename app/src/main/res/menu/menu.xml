@@ -18,6 +18,11 @@
                     android:id="@+id/menu_candidate_history"
                     android:icon="@drawable/ic_application_menu"
                     android:title="Lịch sử ứng tuyển" />
+
+                <item
+                    android:id="@+id/menu_employer_application"
+                    android:icon="@drawable/ic_application_menu"
+                    android:title="Hố sơ ứng tuyển" />
             </menu>
         </item>
     </group>

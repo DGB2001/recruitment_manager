@@ -17,7 +17,7 @@
         app:headerLayout="@layout/header_menu"
         app:itemIconTint="#0288D1"
         app:itemTextColor="#000"
-        app:menu="@menu/menu_candidate" />
+        app:menu="@menu/menu" />
 
     <ScrollView
         android:layout_width="match_parent"
