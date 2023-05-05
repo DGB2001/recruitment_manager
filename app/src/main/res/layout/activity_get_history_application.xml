@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/header_menu_candidate"
+        app:headerLayout="@layout/header_menu"
         app:itemIconTint="#0288D1"
         app:itemTextColor="#000"
         app:menu="@menu/menu_candidate" />
