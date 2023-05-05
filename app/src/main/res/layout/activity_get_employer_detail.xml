@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".Activity.GetEmployerDetail"
+    tools:openDrawer="start">
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header_menu"
+        app:itemIconTint="#0288D1"
+        app:itemTextColor="#000"
+        app:menu="@menu/menu_employer" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#246BFD"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/ic_menu"
+                app:title="THÔNG TIN TÀI KHOẢN" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                <TextView
+                    android:id="@+id/emaillLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="email"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/emaillLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:padding="5dp"
+                    android:text="email" />
+
+                <TextView
+                    android:id="@+id/company_nameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvEmail"
+                    android:layout_marginTop="9dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="công ty"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/tvCompanyName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/company_nameLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:padding="5dp"
+                    android:text="company name" />
+
+
+                <TextView
+                    android:id="@+id/phoneLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvCompanyName"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="số điện thoại"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/tvPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phoneLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:padding="5dp"
+                    android:text="0123456789" />
+
+                <TextView
+                    android:id="@+id/addressLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvPhone"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="địa chỉ"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/tvAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/addressLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:padding="5dp"
+                    android:text="96 Định Công" />
+
+                <TextView
+                    android:id="@+id/typeAccLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvAddress"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="Loại tài khoản"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/tvRole"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/typeAccLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:editable="false"
+                    android:padding="5dp"
+                    android:text="Nhà tuyển dụng" />
+
+                <TextView
+                    android:id="@+id/statusLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvRole"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/archivo_bold"
+                    android:text="Trạng thái"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/tvStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/statusLabel"
+                    android:background="@drawable/bg_strip_round"
+                    android:editable="false"
+                    android:padding="5dp"
+                    android:text="Hoạt động" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvStatus"
+                    android:layout_marginTop="10dp"
+                    android:background="#00000000"
+                    android:fontFamily="@font/archivo_bold"
+                    android:padding="3dp"
+                    android:text="xóa tài khoản?"
+                    android:textColor="#F44336"
+                    android:textSize="14dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnUpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btnDelete"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_btn_blue_corner_16"
+                    android:text="cập nhật"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
