@@ -18,8 +18,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.recruitmentmanager.Adapter.SharedPreferencesManager;
+import com.example.recruitmentmanager.Data.ApiService;
+import com.example.recruitmentmanager.Data.ApiUtils;
+import com.example.recruitmentmanager.Model.User;
 import com.example.recruitmentmanager.R;
 import com.google.android.material.navigation.NavigationView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GetEmployerDetail extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     NavigationView nav_view;
@@ -39,6 +46,7 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
 
         AnhXa();
         setOnClick();
+        getEmployerDatail();
 
         /********Toolbar********/
         setSupportActionBar(toolbar);
@@ -81,6 +89,32 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
         nav_view.setNavigationItemSelectedListener(this);
         btnUpdate.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
+    }
+
+    private void getEmployerDatail(){
+        ApiService apiService = ApiUtils.getAPIService();
+        Call<User> employerDetailCall = apiService.getEmployerDetail(sharedPreferences.getUserAuthLogin().getEmployer_id());
+        employerDetailCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    User userInfo = response.body();
+                    if (userInfo != null) {
+                        tvCompanyName.setText(userInfo.getCompany_name());
+                        tvPhone.setText(userInfo.getPhone_number());
+                        tvAddress.setText(userInfo.getAddress());
+                        tvEmail.setText(sharedPreferences.getUserAuthLogin().getEmail());
+                        tvRole.setText(sharedPreferences.getUserAuthLogin().getRole());
+                        tvStatus.setText(sharedPreferences.getUserAuthLogin().getStatus());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
     }
 
     private void updateEmployerDetail(){

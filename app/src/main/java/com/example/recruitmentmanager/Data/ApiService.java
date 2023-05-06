@@ -56,6 +56,8 @@ public interface ApiService {
 
     @GET("candidates/{candidateId}/applications")
     Call<List<ApplicationInfo>> getHistoryApplication (@Path("candidateId") int candidate_id);
-    
+
+    @GET("employers/{id}")
+    Call<User> getEmployerDetail (@Path("id") int id);
    
 }
