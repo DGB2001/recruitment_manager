@@ -39,8 +39,6 @@ public class SharedPreferencesManager {
 
     public String[] getRememberUserLogin() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        Log.e("Logintest", "email: " + sharedPreferences.getString("email_login", ""));
-        Log.e("Logintest", "pass: " + sharedPreferences.getString("password_login", ""));
         return new String[]{sharedPreferences.getString("email_login", ""), sharedPreferences.getString("password_login", "")};
     }
 

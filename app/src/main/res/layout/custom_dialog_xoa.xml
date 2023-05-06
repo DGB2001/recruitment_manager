@@ -8,12 +8,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_btn_blue_corner_10_1"
+        android:background="@drawable/bg_btn_blue_corner_10"
+        android:fontFamily="@font/bangers_medium"
         android:gravity="center"
-        android:padding="12dp"
+        android:padding="10dp"
         android:text="bạn thật sự muốn xóa tài khoản chứ?"
         android:textAllCaps="true"
-        android:fontFamily="@font/bangers_medium"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

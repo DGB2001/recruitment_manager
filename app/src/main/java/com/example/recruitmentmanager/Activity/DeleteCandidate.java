@@ -39,8 +39,6 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
 
         AnhXa();
         setOnClick();
-
-
     }
 
     private void AnhXa() {
@@ -63,8 +61,8 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
         voidCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
-                    Log.i("LOG","Code: " + response.code() );
+                if (response.isSuccessful()) {
+                    Log.i("LOG", "Code: " + response.code());
                 }
 
             }
@@ -126,7 +124,6 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
     @Override
     public void onClick(View view) {
         Intent intent;
@@ -146,7 +143,6 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
         }
 
     }
-
 
 
 }

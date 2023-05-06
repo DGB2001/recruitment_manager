@@ -41,9 +41,11 @@ public interface ApiService {
                                          @Field("recruitment_news_id") int recruitment_news_id,
                                          @Field("title") String title,
                                          @Field("content") String content);
+
                                          
     @GET("employers")
     Call<List<EmployerInfo>> getEmployerList();
+
 
     @GET("candidates/{id}")
     Call<User> getCandidateDetail (@Path("id") int id);
@@ -56,8 +58,28 @@ public interface ApiService {
 
     @GET("candidates/{candidateId}/applications")
     Call<List<ApplicationInfo>> getHistoryApplication (@Path("candidateId") int candidate_id);
+    
+    @GET("recruitment-news/")
+    Call<List<RecruitmentInfo>> getRecruitmentEmployerList(@Query("employer_id") int employer_id, @Query("order_by") String order_by);
 
+    @POST("candidates")
+    @FormUrlEncoded
+    Call<ApplicationResponse> createcandidate(@Field("email") String email,
+                                                    @Field("password") String password,
+                                                    @Field("role") int role,
+                                                    @Field("name") String name,
+                                                    @Field("gender") int gender,
+                                                    @Field("phone_number") String phone,
+                                                    @Field("address") String address);
+    @POST("employers")
+    @FormUrlEncoded
+    Call<ApplicationResponse> createemployer(@Field("email") String email,
+                                              @Field("password") String password,
+                                              @Field("role") int role,
+                                              @Field("company_name") String companyName,
+                                              @Field("phone_number") String phone,
+                                              @Field("address") String address);
+                                              
     @GET("employers/{id}")
     Call<User> getEmployerDetail (@Path("id") int id);
-   
 }

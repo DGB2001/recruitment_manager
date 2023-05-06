@@ -23,8 +23,14 @@ import com.example.recruitmentmanager.R;
 import java.util.List;
 
 public class RecruitmentNewsAdapter extends RecyclerView.Adapter<RecruitmentNewsAdapter.RecruitmentNewsViewHolder> {
+    private static String SHARED_PREF_NAME = "usersignin";
+
+
     private final List<RecruitmentInfo> recruitmentInfoList;
     private Context context;
+
+    SharedPreferencesManager sharedPreferences;
+
 
     public RecruitmentNewsAdapter(Activity Context, List<RecruitmentInfo> recruitmentInfoList) {
         this.recruitmentInfoList = recruitmentInfoList;
@@ -55,14 +61,27 @@ public class RecruitmentNewsAdapter extends RecyclerView.Adapter<RecruitmentNews
         holder.img_quantity.setImageResource(R.drawable.ic_quantity);
         holder.img_time.setImageResource(R.drawable.ic_time);
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, GetRecruitmentNewDetail.class);
-                intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
-                context.startActivity(intent);
-            }
-        });
+        sharedPreferences = new SharedPreferencesManager(context);
+
+        if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, GetRecruitmentNewDetail.class);
+                    intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
+                    context.startActivity(intent);
+                }
+            });
+        } else {
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                }
+            });
+        }
+
     }
 
     @Override

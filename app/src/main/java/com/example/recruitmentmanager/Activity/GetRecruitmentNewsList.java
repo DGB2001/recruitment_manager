@@ -51,8 +51,9 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         setContentView(R.layout.activity_get_recruitment_news_list);
 
         AnhXa();
-        getRecruitmentNewsList();
         setOnClick();
+
+
 
         /********Toolbar********/
         setSupportActionBar(toolbar);
@@ -66,6 +67,17 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
 
         /********Hide or show menu items********/
         Menu menu = nav_view.getMenu();
+        if(sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")){
+            menu.findItem(R.id.menu_employer_application).setVisible(false);
+            getRecruitmentNewsList();
+
+        }
+
+        if(sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")){
+            menu.findItem(R.id.menu_candidate_history).setVisible(false);
+            menu.findItem(R.id.menu_candidate_nhatuyendung).setVisible(false);
+            getRecruitmentEmployerList();
+        }
 
     }
 
@@ -96,13 +108,32 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                     recruitmentInfoList = response.body();
                     RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
                     rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
-                    Log.e("TAG", "1." + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
-                Log.e("TAG", "c." + t.getMessage());
+                Log.e("onFailure", "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getRecruitmentEmployerList() {
+        ApiService apiService = ApiUtils.getAPIService();
+        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentEmployerList(sharedPreferences.getUserAuthLogin().getEmployer_id(),"desc");
+        recruitmentNewsListCall.enqueue(new Callback<List<RecruitmentInfo>>() {
+            @Override
+            public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
+                if (response.isSuccessful()) {
+                    recruitmentInfoList = response.body();
+                    RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
+                    rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
+                Log.e("onFailure", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -133,9 +164,19 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 break;
 
             case R.id.menu_candidate_account:
-                intent = new Intent(GetRecruitmentNewsList.this, GetCandidateInfoDetail.class);
-                startActivity(intent);
-                finish();
+                if(sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")){
+                    intent = new Intent(GetRecruitmentNewsList.this, GetCandidateInfoDetail.class);
+                    startActivity(intent);
+                    finish();
+
+                }
+
+                if(sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")){
+                    intent = new Intent(GetRecruitmentNewsList.this, GetEmployerDetail.class);
+                    startActivity(intent);
+                    finish();
+                }
+
                 break;
 
             case R.id.menu_candidate_logout:
@@ -145,6 +186,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 finish();
                 Toast.makeText(GetRecruitmentNewsList.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                 break;
+
 
             default:
                 break;
