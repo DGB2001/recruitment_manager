@@ -2,18 +2,33 @@ package com.example.recruitmentmanager.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.recruitmentmanager.Data.ApiService;
+import com.example.recruitmentmanager.Data.ApiUtils;
+import com.example.recruitmentmanager.Model.ApplicationResponse;
 import com.example.recruitmentmanager.R;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUpCandidate extends AppCompatActivity {
 private EditText editTextEmail, editTextPassword, editTextName, editTextPhone, editTextAddress;
+private Spinner spinnerGender;
+    ArrayList<String> gender;
 private RadioGroup rdoGroupGender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,25 +39,56 @@ private RadioGroup rdoGroupGender;
         editTextPassword = findViewById(R.id.edtPassword);
         editTextPhone = findViewById(R.id.edtPhone);
         editTextAddress = findViewById(R.id.edtAddress);
-        rdoGroupGender = findViewById(R.id.radioGroupGender);
-
+        spinnerGender = findViewById(R.id.spinnerGender);
+        addItemGenderSpinner();
+        int idgender = spinnerGender.getSelectedItemPosition();
         Button btnSignup = findViewById(R.id.btnSignupEmployer);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if( validateField()){
+                    String email = editTextEmail.getText().toString();
+                    String password = editTextPassword.getText().toString();
+                    String phone = editTextPhone.getText().toString();
+                    String address = editTextAddress.getText().toString();
+                    String name = editTextName.getText().toString();
 
+                    ApiService apiService = ApiUtils.getAPIService();
+                    Call<ApplicationResponse> applicationResponseCall = apiService.createcandidate(email, password, 1, name, idgender, phone,address);
+                    applicationResponseCall.enqueue(new Callback<ApplicationResponse>() {
+                        @Override
+                        public void onResponse(Call<ApplicationResponse> call, Response<ApplicationResponse> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(SignUpCandidate.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SignUpCandidate.this, SignIn.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApplicationResponse> call, Throwable t) {
+                            Log.e("onFailure", "onFailure: " + t.getMessage());
+                        }
+                    });
                 }
             }
         });
+    }
+    public void addItemGenderSpinner() {
+        gender = new ArrayList<String>();
+        gender.add("Nữ");
+        gender.add("Nam");
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, gender);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.spinnerGender.setAdapter(adapter);
     }
 
     private boolean validateField() {
         String name = editTextName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        int selectedGenderId = rdoGroupGender.getCheckedRadioButtonId();
         String phone = editTextPhone.getText().toString().trim();
         String address = editTextAddress.getText().toString().trim();
 
@@ -73,12 +119,6 @@ private RadioGroup rdoGroupGender;
             editTextName.requestFocus();
             return false;
         }
-        if (selectedGenderId == -1) {
-            Toast.makeText(getApplicationContext(), "Please select a gender", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-
         if (phone.isEmpty()) {
             editTextPhone.setError("Phone number is required");
             editTextPhone.requestFocus();

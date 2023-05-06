@@ -2,7 +2,9 @@ package com.example.recruitmentmanager.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.recruitmentmanager.Data.ApiService;
+import com.example.recruitmentmanager.Data.ApiUtils;
+import com.example.recruitmentmanager.Model.ApplicationResponse;
 import com.example.recruitmentmanager.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUpEmployer extends AppCompatActivity {
 private EditText editTextEmail, editTextPassword, editTextCompanyname, editTextPhone, editTextAddress;
@@ -29,7 +38,29 @@ private EditText editTextEmail, editTextPassword, editTextCompanyname, editTextP
             @Override
             public void onClick(View v) {
                 if( validateField()){
+                    String email = editTextEmail.getText().toString();
+                    String password = editTextPassword.getText().toString();
+                    String phone = editTextPhone.getText().toString();
+                    String address = editTextAddress.getText().toString();
+                    String companyName = editTextCompanyname.getText().toString();
+                    ApiService apiService = ApiUtils.getAPIService();
+                    Call<ApplicationResponse> applicationResponseCall = apiService.createemployer(email, password, 2, companyName, phone,address);
+                    applicationResponseCall.enqueue(new Callback<ApplicationResponse>() {
+                        @Override
+                        public void onResponse(Call<ApplicationResponse> call, Response<ApplicationResponse> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(SignUpEmployer.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SignUpEmployer.this, SignIn.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
 
+                        @Override
+                        public void onFailure(Call<ApplicationResponse> call, Throwable t) {
+                            Log.e("onFailure", "onFailure: " + t.getMessage());
+                        }
+                    });
                 }
             }
         });

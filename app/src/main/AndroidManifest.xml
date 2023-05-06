@@ -53,7 +53,12 @@
         <activity
             android:name=".Activity.GetEmployerList"
             android:exported="false" />
-
+        <activity
+            android:name=".Activity.SignUpCandidate"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.SignUpEmployer"
+            android:exported="false" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

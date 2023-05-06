@@ -87,35 +87,26 @@
             android:paddingVertical="10sp">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/genderLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="22dp"
+                android:text="Giới tính"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
+
+            <Spinner
+                android:id="@+id/spinnerGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Gender"
-                android:textAlignment="center"
-                android:textColor="#302C2C"
-                android:textSize="18sp" />
+                android:layout_below="@id/genderLabel"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_strip_round"
+                android:padding="5dp" />
 
-            <RadioGroup
-                android:id="@+id/radioGroupGender"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/radioButton8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="6sp"
-                    android:text="Male" />
 
-                <RadioButton
-                    android:id="@+id/radioButton9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Female" />
-            </RadioGroup>
 
         </LinearLayout>
 
