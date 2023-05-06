@@ -58,7 +58,7 @@ public interface ApiService {
 
     @GET("candidates/{candidateId}/applications")
     Call<List<ApplicationInfo>> getHistoryApplication (@Path("candidateId") int candidate_id);
-
+    
     @GET("recruitment-news/")
     Call<List<RecruitmentInfo>> getRecruitmentEmployerList(@Query("employer_id") int employer_id, @Query("order_by") String order_by);
 
@@ -79,4 +79,7 @@ public interface ApiService {
                                               @Field("company_name") String companyName,
                                               @Field("phone_number") String phone,
                                               @Field("address") String address);
+                                              
+    @GET("employers/{id}")
+    Call<User> getEmployerDetail (@Path("id") int id);
 }

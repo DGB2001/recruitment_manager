@@ -1,7 +1,7 @@
 package com.example.recruitmentmanager.Model;
 
 public class User {
-    String name, phone_number, address, email;
+    String name, phone_number, address, email, company_name;
     int gender;
 
     public User(String name, String phone_number, String address, String email, int gender) {
@@ -50,5 +50,13 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCompany_name() {
+        return company_name;
+    }
+
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
     }
 }
