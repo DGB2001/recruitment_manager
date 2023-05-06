@@ -26,6 +26,7 @@ import com.example.recruitmentmanager.Data.ApiUtils;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
 import com.example.recruitmentmanager.Model.User;
 import com.example.recruitmentmanager.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -35,13 +36,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetRecruitmentNewsList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class GetRecruitmentNewsList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     NavigationView nav_view;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     SharedPreferencesManager sharedPreferences;
     RecyclerView rc_RecruitmentNewsList;
     List<RecruitmentInfo> recruitmentInfoList;
+    FloatingActionButton fabBtnAddSp;
 
 
     @Override
@@ -52,7 +54,6 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
 
         AnhXa();
         setOnClick();
-
 
 
         /********Toolbar********/
@@ -67,13 +68,14 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
 
         /********Hide or show menu items********/
         Menu menu = nav_view.getMenu();
-        if(sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")){
+        if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
             menu.findItem(R.id.menu_employer_application).setVisible(false);
             getRecruitmentNewsList();
+//            fabBtnAddSp.setVisibility(View.GONE);
 
         }
 
-        if(sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")){
+        if (sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")) {
             menu.findItem(R.id.menu_candidate_history).setVisible(false);
             menu.findItem(R.id.menu_candidate_nhatuyendung).setVisible(false);
             getRecruitmentEmployerList();
@@ -82,6 +84,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     }
 
     private void AnhXa() {
+        fabBtnAddSp = findViewById(R.id.fabBtnAddSp);
         drawerLayout = findViewById(R.id.drawerlayout);
         nav_view = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
@@ -95,6 +98,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     }
 
     private void setOnClick() {
+        fabBtnAddSp.setOnClickListener(this);
         nav_view.setNavigationItemSelectedListener(this);
     }
 
@@ -120,7 +124,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
 
     public void getRecruitmentEmployerList() {
         ApiService apiService = ApiUtils.getAPIService();
-        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentEmployerList(sharedPreferences.getUserAuthLogin().getEmployer_id(),"desc");
+        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentEmployerList(sharedPreferences.getUserAuthLogin().getEmployer_id(), "desc");
         recruitmentNewsListCall.enqueue(new Callback<List<RecruitmentInfo>>() {
             @Override
             public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
@@ -164,14 +168,14 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 break;
 
             case R.id.menu_candidate_account:
-                if(sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")){
+                if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
                     intent = new Intent(GetRecruitmentNewsList.this, GetCandidateInfoDetail.class);
                     startActivity(intent);
                     finish();
 
                 }
 
-                if(sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")){
+                if (sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")) {
                     intent = new Intent(GetRecruitmentNewsList.this, GetEmployerDetail.class);
                     startActivity(intent);
                     finish();
@@ -193,5 +197,17 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+
+            case R.id.fabBtnAddSp:
+                intent = new Intent(this, GetEmployerList.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

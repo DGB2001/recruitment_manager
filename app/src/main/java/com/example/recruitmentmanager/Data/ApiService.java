@@ -82,4 +82,10 @@ public interface ApiService {
                                               
     @GET("employers/{id}")
     Call<User> getEmployerDetail (@Path("id") int id);
+
+    @PUT("employers/{id}")
+    Call<User> updateEmployerDetail (@Path("id") int id, @Body User user);
+
+    @DELETE("employers/{id}")
+    Call<Void> deleteEmployer (@Path("id") int id);
 }

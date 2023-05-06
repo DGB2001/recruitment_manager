@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -118,7 +119,37 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
     }
 
     private void updateEmployerDetail(){
+        String copanyName = String.valueOf(tvCompanyName.getText());
+        String phone = String.valueOf(tvPhone.getText());
+        String address = String.valueOf(tvAddress.getText());
+        String email = String.valueOf(tvEmail.getText());
 
+        User user = new User(email,copanyName, phone, address);
+        ApiService apiService = ApiUtils.getAPIService();
+        Call<User> userCall = apiService.updateEmployerDetail(sharedPreferences.getUserAuthLogin().getEmployer_id(), user);
+        userCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    tvCompanyName.setText(copanyName);
+                    tvPhone.setText(phone);
+                    tvAddress.setText(address);
+                    tvEmail.setText(email);
+                    tvRole.setText(sharedPreferences.getUserAuthLogin().getRole());
+                    tvStatus.setText(sharedPreferences.getUserAuthLogin().getStatus());
+                    Toast.makeText(GetEmployerDetail.this, "thành công", Toast.LENGTH_SHORT).show();
+                    Log.e("tag", "1: " + response.code());
+                }
+                else {
+                    Log.e("tag", "2: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("onFailure", "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     @Override
