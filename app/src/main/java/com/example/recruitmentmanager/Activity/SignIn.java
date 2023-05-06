@@ -87,6 +87,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
     private void setOnClick() {
         btn_SignIn.setOnClickListener(SignIn.this);
+        btn_SignUp.setOnClickListener(SignIn.this);
     }
 
     private void userLogin() {
