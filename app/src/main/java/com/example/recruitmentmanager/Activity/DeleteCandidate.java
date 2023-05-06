@@ -57,7 +57,7 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
 
     private void deleteCandidate() {
         ApiService apiService = ApiUtils.getAPIService();
-        Call<Void> voidCall = apiService.deleteCandidate(sharedPreferencesManager.getUserAuthLogin().getId());
+        Call<Void> voidCall = apiService.deleteCandidate(sharedPreferencesManager.getUserAuthLogin().getCandidate_id());
         voidCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -73,6 +73,31 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
             }
         });
     }
+
+    private void deleteEmployer() {
+        ApiService apiService = ApiUtils.getAPIService();
+        Call<Void> voidCall = apiService.deleteEmployer(sharedPreferencesManager.getUserAuthLogin().getEmployer_id());
+        voidCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.e("LOG1", "Code1: " + response.code());
+                }
+                else {
+                    Log.e("LOG1", "Code2: " + response.code());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 
     private void DialogXoa(int gravity) {
         Dialog dialog = new Dialog(this);
@@ -105,12 +130,24 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
         btn_xoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteCandidate();
-                sharedPreferencesManager.signOut();
-                Toast.makeText(DeleteCandidate.this, "Xóa thành công", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(DeleteCandidate.this, SignIn.class);
-                startActivity(intent);
-                finish();
+                if(sharedPreferencesManager.getUserAuthLogin().getRole().equals("Ứng viên")){
+                    deleteCandidate();
+                    sharedPreferencesManager.signOut();
+                    Toast.makeText(DeleteCandidate.this, "Xóa thành công", Toast.LENGTH_LONG).show();
+                    Log.e("tag", "1");
+                    Intent intent = new Intent(DeleteCandidate.this, SignIn.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    deleteEmployer();
+                    sharedPreferencesManager.signOut();
+                    Toast.makeText(DeleteCandidate.this, "Xóa thành công", Toast.LENGTH_LONG).show();
+                    Log.e("tag", "2");
+                    Intent intent = new Intent(DeleteCandidate.this, SignIn.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 

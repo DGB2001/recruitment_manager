@@ -12,6 +12,13 @@ public class User {
         this.gender = gender;
     }
 
+    public User(String email, String company_name, String phone_number, String address) {
+        this.phone_number = phone_number;
+        this.address = address;
+        this.email = email;
+        this.company_name = company_name;
+    }
+
     public String getEmail() {
         return email;
     }

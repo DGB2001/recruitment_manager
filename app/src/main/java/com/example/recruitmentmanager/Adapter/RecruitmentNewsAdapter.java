@@ -23,9 +23,6 @@ import com.example.recruitmentmanager.R;
 import java.util.List;
 
 public class RecruitmentNewsAdapter extends RecyclerView.Adapter<RecruitmentNewsAdapter.RecruitmentNewsViewHolder> {
-    private static String SHARED_PREF_NAME = "usersignin";
-
-
     private final List<RecruitmentInfo> recruitmentInfoList;
     private Context context;
 
