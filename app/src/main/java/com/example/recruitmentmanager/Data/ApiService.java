@@ -88,4 +88,15 @@ public interface ApiService {
 
     @DELETE("employers/{id}")
     Call<Void> deleteEmployer (@Path("id") int id);
+
+    @POST("recruitment-news")
+    @FormUrlEncoded
+    Call<ApplicationResponse> createRecruitmentNews(@Field("employer_id") int  employer_id,
+                                                    @Field("master_technical_id") int master_technical_id,
+                                                    @Field("master_level_id") int master_level_id,
+                                                    @Field("title") String title,
+                                                    @Field("description") String description,
+                                                    @Field("salary") int salary,
+                                                    @Field("quantity") int quantity,
+                                                    @Field("expired_at") String expired_at);
 }

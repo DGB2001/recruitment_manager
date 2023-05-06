@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.CreateRecruitmentNews"
+            android:exported="false" />
+        <activity
             android:name=".Activity.GetEmployerDetail"
             android:exported="false" />
         <activity
@@ -59,6 +62,7 @@
         <activity
             android:name=".Activity.SignUpEmployer"
             android:exported="false" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

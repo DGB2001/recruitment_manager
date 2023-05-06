@@ -71,7 +71,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
             menu.findItem(R.id.menu_employer_application).setVisible(false);
             getRecruitmentNewsList();
-//            fabBtnAddSp.setVisibility(View.GONE);
+            fabBtnAddSp.setVisibility(View.GONE);
 
         }
 
@@ -205,7 +205,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         switch (view.getId()) {
 
             case R.id.fabBtnAddSp:
-                intent = new Intent(this, GetEmployerList.class);
+                intent = new Intent(this, CreateRecruitmentNews.class);
                 startActivity(intent);
                 break;
         }
