@@ -37,8 +37,6 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
     EditText tvEmail, tvCompanyName, tvPhone, tvAddress, tvRole, tvStatus;
     AppCompatButton btnDelete, btnUpdate;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,17 +55,15 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        nav_view.setCheckedItem(R.id.menu_candidate_tintuyendung);
+        nav_view.setCheckedItem(R.id.menu_recruitment_news);
 
         /********Hide or show menu items********/
         Menu menu = nav_view.getMenu();
-        if(sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")){
-            menu.findItem(R.id.menu_employer_application).setVisible(false);
-        }
-
-        if(sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")){
-            menu.findItem(R.id.menu_candidate_history).setVisible(false);
-            menu.findItem(R.id.menu_candidate_nhatuyendung).setVisible(false);
+        if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
+            menu.findItem(R.id.menu_create_recruitment_news).setVisible(false);
+        } else {
+            menu.findItem(R.id.menu_employer).setVisible(false);
+            menu.findItem(R.id.menu_history_application).setVisible(false);
         }
     }
 
@@ -86,19 +82,20 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
         btnDelete = findViewById(R.id.btnDelete);
     }
 
-    private void setOnClick(){
+    private void setOnClick() {
         nav_view.setNavigationItemSelectedListener(this);
         btnUpdate.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
     }
 
-    private void getEmployerDatail(){
+    private void getEmployerDatail() {
         ApiService apiService = ApiUtils.getAPIService();
         Call<User> employerDetailCall = apiService.getEmployerDetail(sharedPreferences.getUserAuthLogin().getEmployer_id());
         employerDetailCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
+                    Log.i("getEmployerDatail", "Successfull: " + response.code());
                     User userInfo = response.body();
                     if (userInfo != null) {
                         tvCompanyName.setText(userInfo.getCompany_name());
@@ -108,23 +105,25 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
                         tvRole.setText(sharedPreferences.getUserAuthLogin().getRole());
                         tvStatus.setText(sharedPreferences.getUserAuthLogin().getStatus());
                     }
+                } else {
+                    Log.e("getEmployerDatail", "Failed: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                Log.e("getEmployerDatail", "onFailure: " + t.getMessage());
             }
         });
     }
 
-    private void updateEmployerDetail(){
+    private void updateEmployerDetail() {
         String copanyName = String.valueOf(tvCompanyName.getText());
         String phone = String.valueOf(tvPhone.getText());
         String address = String.valueOf(tvAddress.getText());
         String email = String.valueOf(tvEmail.getText());
 
-        User user = new User(email,copanyName, phone, address);
+        User user = new User(email, copanyName, phone, address);
         ApiService apiService = ApiUtils.getAPIService();
         Call<User> userCall = apiService.updateEmployerDetail(sharedPreferences.getUserAuthLogin().getEmployer_id(), user);
         userCall.enqueue(new Callback<User>() {
@@ -138,16 +137,15 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
                     tvRole.setText(sharedPreferences.getUserAuthLogin().getRole());
                     tvStatus.setText(sharedPreferences.getUserAuthLogin().getStatus());
                     Toast.makeText(GetEmployerDetail.this, "thành công", Toast.LENGTH_SHORT).show();
-                    Log.e("tag", "1: " + response.code());
-                }
-                else {
-                    Log.e("tag", "2: " + response.code());
+                    Log.e("updateEmployerDetail", "Successful: " + response.code());
+                } else {
+                    Log.e("updateEmployerDetail", "Failed: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.e("onFailure", "onFailure: " + t.getMessage());
+                Log.e("updateEmployerDetail", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -177,7 +175,7 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
                 break;
 
             case R.id.btnDelete:
-                intent=new Intent(this,DeleteCandidate.class);
+                intent = new Intent(this, DeleteUser.class);
                 startActivity(intent);
                 break;
         }
@@ -188,32 +186,24 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
         Menu menu = nav_view.getMenu();
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.menu_candidate_tintuyendung:
+            case R.id.menu_recruitment_news:
                 intent = new Intent(GetEmployerDetail.this, GetRecruitmentNewsList.class);
                 startActivity(intent);
                 finish();
                 break;
 
-            case R.id.menu_candidate_nhatuyendung:
+            case R.id.menu_app_infor:
                 break;
 
-            case R.id.menu_candidate_history:
-                break;
-
-            case R.id.menu_candidate_thongtin:
-                break;
-
-            case R.id.menu_candidate_hotro:
+            case R.id.menu_app_support:
                 break;
 
             case R.id.menu_candidate_account:
-                if(sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")){
-                    intent = new Intent(GetEmployerDetail.this, GetCandidateInfoDetail.class);
+                if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
+                    intent = new Intent(GetEmployerDetail.this, GetCandidateDetail.class);
                     startActivity(intent);
                     finish();
-                }
-
-                if(sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")){
+                } else {
                     intent = new Intent(GetEmployerDetail.this, GetEmployerDetail.class);
                     startActivity(intent);
                     finish();

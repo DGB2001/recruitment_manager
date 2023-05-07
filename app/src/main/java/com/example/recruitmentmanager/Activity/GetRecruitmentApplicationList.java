@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetRecruitmentApplicationList extends AppCompatActivity {
+public class GetRecruitmentApplicationList extends AppCompatActivity implements View.OnClickListener {
     ImageView imgNotFound;
     TextView tvJobTittle;
     SharedPreferencesManager sharedPreferences;
@@ -44,20 +44,16 @@ public class GetRecruitmentApplicationList extends AppCompatActivity {
         setContentView(R.layout.activity_get_recruitment_application_list);
 
         AnhXa();
-        Intent intent = getIntent();
-        idRecruitmentNews = intent.getIntExtra("idRecruitmentNews", -1);
-        jobTittle = intent.getStringExtra("jobTittle");
-        tvJobTittle.setText(jobTittle);
-
-
+        setOnClick();
+        getAndSetData();
         getRecruitmentApplication();
     }
 
     private void AnhXa() {
-        imgNotFound=findViewById(R.id.imgNotFound);
-        tvJobTittle=findViewById(R.id.tvJobTittle);
+        imgNotFound = findViewById(R.id.imgNotFound);
+        tvJobTittle = findViewById(R.id.tvJobTittle);
         applicationInfoList = new ArrayList<>();
-        sharedPreferences=new SharedPreferencesManager(this);
+        sharedPreferences = new SharedPreferencesManager(this);
         rcvRecruitmentApplication = findViewById(R.id.rcvRecruitmentApplication);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rcvRecruitmentApplication.setLayoutManager(linearLayoutManager);
@@ -65,7 +61,18 @@ public class GetRecruitmentApplicationList extends AppCompatActivity {
         rcvRecruitmentApplication.addItemDecoration(dividerItemDecoration);
     }
 
-    private void getRecruitmentApplication(){
+    private void getAndSetData() {
+        Intent intent = getIntent();
+        idRecruitmentNews = intent.getIntExtra("idRecruitmentNews", -1);
+        jobTittle = intent.getStringExtra("jobTittle");
+        tvJobTittle.setText(jobTittle);
+    }
+
+    private void setOnClick() {
+        imgNotFound.setOnClickListener(this);
+    }
+
+    private void getRecruitmentApplication() {
         ApiService apiService = ApiUtils.getAPIService();
         Call<List<ApplicationInfo>> applicationistCall = apiService.getRecruitmentApplication(idRecruitmentNews);
         applicationistCall.enqueue(new Callback<List<ApplicationInfo>>() {
@@ -73,25 +80,40 @@ public class GetRecruitmentApplicationList extends AppCompatActivity {
             public void onResponse(Call<List<ApplicationInfo>> call, Response<List<ApplicationInfo>> response) {
                 if (response.isSuccessful()) {
                     applicationInfoList = response.body();
-                    if(applicationInfoList.size()>0){
+                    if (applicationInfoList.size() > 0) {
                         RecruitmentApplicationAdapter recruitmentApplicationAdapter = new RecruitmentApplicationAdapter(GetRecruitmentApplicationList.this, applicationInfoList);
                         rcvRecruitmentApplication.setAdapter(recruitmentApplicationAdapter);
-                    }
-                    else {
+                    } else {
                         imgNotFound.setVisibility(View.VISIBLE);
                         imgNotFound.setImageResource(R.drawable.bg_no_item_found);
                     }
-                }
-                else {
+                    Log.e("getRecruitmentApplication", "Successful: " + response.code());
 
+                } else {
+                    Log.e("getRecruitmentApplication", "Failed: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<ApplicationInfo>> call, Throwable t) {
-                Log.e("TAG", "3." + t.getMessage());
+                Log.e("getRecruitmentApplication", "onFailure: " + t.getMessage());
 
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.imgNotFound:
+                intent = new Intent(GetRecruitmentApplicationList.this, GetRecruitmentNewsList.class);
+                startActivity(intent);
+                finish();
+                break;
+
+            default:
+                break;
+        }
     }
 }

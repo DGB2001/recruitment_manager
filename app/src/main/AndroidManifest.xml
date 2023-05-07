@@ -30,13 +30,13 @@
             android:name=".Activity.GetHistoryApplication"
             android:exported="false" />
         <activity
-            android:name=".Activity.DeleteCandidate"
+            android:name=".Activity.DeleteUser"
             android:exported="false" />
         <activity
-            android:name=".Activity.GetCandidateInfoDetail"
+            android:name=".Activity.GetCandidateDetail"
             android:exported="false" />
         <activity
-            android:name=".Activity.CreateApplicationActivity"
+            android:name=".Activity.CreateApplication"
             android:exported="false" />
         <activity
             android:name=".Activity.SignIn"
@@ -48,16 +48,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activity.GetRecruitmentNewsList"
             android:exported="false" />
         <activity
-            android:name=".Activity.StartScreen"
+            android:name=".Activity.ChooseRole"
             android:exported="false" />
         <activity
-            android:name=".Activity.GetRecruitmentNewDetail"
+            android:name=".Activity.GetRecruitmentNewsDetail"
             android:exported="false" />
         <activity
             android:name=".Activity.GetEmployerList"

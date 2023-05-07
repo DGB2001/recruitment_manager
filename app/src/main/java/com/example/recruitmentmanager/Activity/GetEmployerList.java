@@ -3,7 +3,6 @@ package com.example.recruitmentmanager.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
@@ -17,11 +16,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
 import com.example.recruitmentmanager.Adapter.EmployerAdapter;
+import com.example.recruitmentmanager.Adapter.RecruitmentApplicationAdapter;
 import com.example.recruitmentmanager.Adapter.SharedPreferencesManager;
 import com.example.recruitmentmanager.Data.ApiService;
 import com.example.recruitmentmanager.Data.ApiUtils;
@@ -36,7 +38,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetEmployerList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class GetEmployerList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+    ImageView imgNotFound;
     NavigationView nav_view;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
@@ -52,6 +55,7 @@ public class GetEmployerList extends AppCompatActivity implements NavigationView
         setContentView(R.layout.activity_get_employer_list);
 
         AnhXa();
+        setOnClick();
         getEmployerList();
 
         /********Toolbar********/
@@ -62,15 +66,21 @@ public class GetEmployerList extends AppCompatActivity implements NavigationView
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        nav_view.setCheckedItem(R.id.menu_candidate_tintuyendung);
+        nav_view.setCheckedItem(R.id.menu_recruitment_news);
 
         /********Hide or show menu items********/
         Menu menu = nav_view.getMenu();
+        if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
+            menu.findItem(R.id.menu_create_recruitment_news).setVisible(false);
+        } else {
+            menu.findItem(R.id.menu_employer).setVisible(false);
+            menu.findItem(R.id.menu_history_application).setVisible(false);
+        }
 
-        setOnClick();
     }
 
     private void AnhXa() {
+        imgNotFound = findViewById(R.id.imgNotFound);
         drawerLayout = findViewById(R.id.drawerLayout);
         nav_view = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
@@ -86,9 +96,10 @@ public class GetEmployerList extends AppCompatActivity implements NavigationView
 
     private void setOnClick() {
         nav_view.setNavigationItemSelectedListener(this);
+        imgNotFound.setOnClickListener(this);
     }
 
-    public void getEmployerList(){
+    public void getEmployerList() {
         ApiService apiService = ApiUtils.getAPIService();
         Call<List<EmployerInfo>> employerListCall = apiService.getEmployerList();
         employerListCall.enqueue(new Callback<List<EmployerInfo>>() {
@@ -96,15 +107,22 @@ public class GetEmployerList extends AppCompatActivity implements NavigationView
             public void onResponse(Call<List<EmployerInfo>> call, Response<List<EmployerInfo>> response) {
                 if (response.isSuccessful()) {
                     employerInfoList = response.body();
-                    employerAdapter = new EmployerAdapter(GetEmployerList.this, employerInfoList);
-                    rc_Employer.setAdapter(employerAdapter);
-                    Log.i("isSuccessful","OK");
+                    if (employerInfoList.size() > 0) {
+                        employerAdapter = new EmployerAdapter(GetEmployerList.this, employerInfoList);
+                        rc_Employer.setAdapter(employerAdapter);
+                    } else {
+                        imgNotFound.setVisibility(View.VISIBLE);
+                        imgNotFound.setImageResource(R.drawable.bg_no_item_found);
+                    }
+                    Log.i("getEmployerList", "Successfull: " + response.code());
+                } else {
+                    Log.e("getEmployerList", "Failed: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<EmployerInfo>> call, Throwable t) {
-
+                Log.e("getEmployerList", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -115,29 +133,26 @@ public class GetEmployerList extends AppCompatActivity implements NavigationView
         Intent intent;
         switch (menuItem.getItemId()) {
 
-            case R.id.menu_candidate_tintuyendung:
+            case R.id.menu_recruitment_news:
                 intent = new Intent(GetEmployerList.this, GetRecruitmentNewsList.class);
                 startActivity(intent);
                 finish();
                 break;
 
-            case R.id.menu_candidate_nhatuyendung:
-                break;
-
-            case R.id.menu_candidate_history:
+            case R.id.menu_history_application:
                 intent = new Intent(GetEmployerList.this, GetHistoryApplication.class);
                 startActivity(intent);
                 finish();
                 break;
 
-            case R.id.menu_candidate_thongtin:
+            case R.id.menu_app_infor:
                 break;
 
-            case R.id.menu_candidate_hotro:
+            case R.id.menu_app_support:
                 break;
 
             case R.id.menu_candidate_account:
-                intent = new Intent(GetEmployerList.this, GetCandidateInfoDetail.class);
+                intent = new Intent(GetEmployerList.this, GetCandidateDetail.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -157,5 +172,18 @@ public class GetEmployerList extends AppCompatActivity implements NavigationView
         return true;
     }
 
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.imgNotFound:
+                intent = new Intent(GetEmployerList.this, GetRecruitmentNewsList.class);
+                startActivity(intent);
+                finish();
+                break;
 
+            default:
+                break;
+        }
+    }
 }

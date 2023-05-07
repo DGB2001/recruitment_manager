@@ -92,6 +92,8 @@ public class UpdateResultApplication extends AppCompatActivity implements View.O
                 if (response.isSuccessful()) {
                     Toast.makeText(UpdateResultApplication.this, "Thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(UpdateResultApplication.this,GetRecruitmentApplicationList.class);
+                    intent.putExtra("idRecruitmentNews",recruitmentNewsId);
+                    intent.putExtra("jobTittle",jobTittle);
                     startActivity(intent);
                     finish();
                     Log.e("err","err: " + response.code());

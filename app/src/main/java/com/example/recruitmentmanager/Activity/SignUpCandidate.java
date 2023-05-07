@@ -1,12 +1,14 @@
 package com.example.recruitmentmanager.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,57 +27,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignUpCandidate extends AppCompatActivity {
-private EditText editTextEmail, editTextPassword, editTextName, editTextPhone, editTextAddress;
-private Spinner spinnerGender;
+public class SignUpCandidate extends AppCompatActivity implements View.OnClickListener {
+    private EditText editTextEmail, editTextPassword, editTextName, editTextPhone, editTextAddress;
+    private Spinner spinnerGender;
     ArrayList<String> gender;
-private RadioGroup rdoGroupGender;
+    AppCompatButton btnSignUp;
+    int idGender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_up_candidate);
+
+        AnhXa();
+        setOnClick();
+        addItemGenderSpinner();
+        idGender = spinnerGender.getSelectedItemPosition();
+    }
+
+    private void AnhXa() {
         editTextName = findViewById(R.id.edtName);
         editTextEmail = findViewById(R.id.edtEmail);
         editTextPassword = findViewById(R.id.edtPassword);
         editTextPhone = findViewById(R.id.edtPhone);
         editTextAddress = findViewById(R.id.edtAddress);
         spinnerGender = findViewById(R.id.spinnerGender);
-        addItemGenderSpinner();
-        int idgender = spinnerGender.getSelectedItemPosition();
-        Button btnSignup = findViewById(R.id.btnSignupEmployer);
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if( validateField()){
-                    String email = editTextEmail.getText().toString();
-                    String password = editTextPassword.getText().toString();
-                    String phone = editTextPhone.getText().toString();
-                    String address = editTextAddress.getText().toString();
-                    String name = editTextName.getText().toString();
-
-                    ApiService apiService = ApiUtils.getAPIService();
-                    Call<ApplicationResponse> applicationResponseCall = apiService.createcandidate(email, password, 1, name, idgender, phone,address);
-                    applicationResponseCall.enqueue(new Callback<ApplicationResponse>() {
-                        @Override
-                        public void onResponse(Call<ApplicationResponse> call, Response<ApplicationResponse> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(SignUpCandidate.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SignUpCandidate.this, SignIn.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApplicationResponse> call, Throwable t) {
-                            Log.e("onFailure", "onFailure: " + t.getMessage());
-                        }
-                    });
-                }
-            }
-        });
+        btnSignUp = findViewById(R.id.btnSignupEmployer);
     }
+
+    private void setOnClick() {
+        btnSignUp.setOnClickListener(this);
+    }
+
     public void addItemGenderSpinner() {
         gender = new ArrayList<String>();
         gender.add("Nữ");
@@ -92,13 +76,6 @@ private RadioGroup rdoGroupGender;
         String phone = editTextPhone.getText().toString().trim();
         String address = editTextAddress.getText().toString().trim();
 
-
-
-//        if (email.isEmpty()) {
-//            editTextEmail.setError("Email is required");
-//            editTextEmail.requestFocus();
-//            return false;
-//        }
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please enter a valid email address");
             editTextEmail.requestFocus();
@@ -136,7 +113,48 @@ private RadioGroup rdoGroupGender;
             editTextAddress.requestFocus();
             return false;
         }
-
         return true;
+    }
+
+    private void signUpCandidate() {
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
+        String phone = editTextPhone.getText().toString();
+        String address = editTextAddress.getText().toString();
+        String name = editTextName.getText().toString();
+
+        ApiService apiService = ApiUtils.getAPIService();
+        Call<ApplicationResponse> applicationResponseCall = apiService.createcandidate(email, password, 1, name, idGender, phone, address);
+        applicationResponseCall.enqueue(new Callback<ApplicationResponse>() {
+            @Override
+            public void onResponse(Call<ApplicationResponse> call, Response<ApplicationResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(SignUpCandidate.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SignUpCandidate.this, SignIn.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApplicationResponse> call, Throwable t) {
+                Log.e("onFailure", "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnSignUp:
+                if (validateField()) {
+                    signUpCandidate();
+                }
+                break;
+
+            default:
+                break;
+        }
+
     }
 }

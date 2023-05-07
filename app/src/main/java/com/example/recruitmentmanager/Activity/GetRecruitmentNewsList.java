@@ -17,14 +17,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.recruitmentmanager.Adapter.RecruitmentApplicationAdapter;
 import com.example.recruitmentmanager.Adapter.RecruitmentNewsAdapter;
 import com.example.recruitmentmanager.Adapter.SharedPreferencesManager;
 import com.example.recruitmentmanager.Data.ApiService;
 import com.example.recruitmentmanager.Data.ApiUtils;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
-import com.example.recruitmentmanager.Model.User;
 import com.example.recruitmentmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -37,6 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetRecruitmentNewsList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+    ImageView imgNotFound;
     NavigationView nav_view;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
@@ -44,7 +46,6 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     RecyclerView rc_RecruitmentNewsList;
     List<RecruitmentInfo> recruitmentInfoList;
     FloatingActionButton fabBtnAddSp;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         AnhXa();
         setOnClick();
 
-
         /********Toolbar********/
         setSupportActionBar(toolbar);
 
@@ -64,26 +64,23 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        nav_view.setCheckedItem(R.id.menu_candidate_tintuyendung);
+        nav_view.setCheckedItem(R.id.menu_recruitment_news);
 
         /********Hide or show menu items********/
         Menu menu = nav_view.getMenu();
         if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
-            menu.findItem(R.id.menu_employer_application).setVisible(false);
+            menu.findItem(R.id.menu_create_recruitment_news).setVisible(false);
             getRecruitmentNewsList();
             fabBtnAddSp.setVisibility(View.GONE);
-
-        }
-
-        if (sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")) {
-            menu.findItem(R.id.menu_candidate_history).setVisible(false);
-            menu.findItem(R.id.menu_candidate_nhatuyendung).setVisible(false);
+        } else {
+            menu.findItem(R.id.menu_employer).setVisible(false);
+            menu.findItem(R.id.menu_history_application).setVisible(false);
             getRecruitmentEmployerList();
         }
-
     }
 
     private void AnhXa() {
+        imgNotFound = findViewById(R.id.imgNotFound);
         fabBtnAddSp = findViewById(R.id.fabBtnAddSp);
         drawerLayout = findViewById(R.id.drawerlayout);
         nav_view = findViewById(R.id.nav_view);
@@ -109,15 +106,23 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
             @Override
             public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
                 if (response.isSuccessful()) {
+                    Log.i("getRecruitmentNewsList", "Successful: " + response.code());
                     recruitmentInfoList = response.body();
-                    RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
-                    rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
+                    if (recruitmentInfoList.size() > 0) {
+                        RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
+                        rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
+                    } else {
+                        imgNotFound.setVisibility(View.VISIBLE);
+                        imgNotFound.setImageResource(R.drawable.bg_no_item_found);
+                    }
+                } else {
+                    Log.i("getRecruitmentNewsList", "Failed: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
-                Log.e("onFailure", "onFailure: " + t.getMessage());
+                Log.e("getRecruitmentNewsList", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -129,15 +134,23 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
             @Override
             public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
                 if (response.isSuccessful()) {
+                    Log.i("getRecruitmentEmployerList", "Successful: " + response.code());
                     recruitmentInfoList = response.body();
-                    RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
-                    rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
+                    if (recruitmentInfoList.size() > 0) {
+                        RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
+                        rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
+                    } else {
+                        imgNotFound.setVisibility(View.VISIBLE);
+                        imgNotFound.setImageResource(R.drawable.bg_no_item_found);
+                    }
+                } else {
+                    Log.i("getRecruitmentEmployerList", "Failed: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
-                Log.e("onFailure", "onFailure: " + t.getMessage());
+                Log.e("getRecruitmentEmployerList", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -147,40 +160,27 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         Menu menu = nav_view.getMenu();
         Intent intent;
         switch (menuItem.getItemId()) {
-            case R.id.menu_candidate_tintuyendung:
-                break;
-
-            case R.id.menu_candidate_nhatuyendung:
+            case R.id.menu_employer:
                 intent = new Intent(GetRecruitmentNewsList.this, GetEmployerList.class);
                 startActivity(intent);
                 break;
 
-            case R.id.menu_candidate_history:
+            case R.id.menu_history_application:
                 intent = new Intent(GetRecruitmentNewsList.this, GetHistoryApplication.class);
                 startActivity(intent);
                 finish();
                 break;
 
-            case R.id.menu_candidate_thongtin:
-                break;
-
-            case R.id.menu_candidate_hotro:
-                break;
-
             case R.id.menu_candidate_account:
                 if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
-                    intent = new Intent(GetRecruitmentNewsList.this, GetCandidateInfoDetail.class);
+                    intent = new Intent(GetRecruitmentNewsList.this, GetCandidateDetail.class);
                     startActivity(intent);
                     finish();
-
-                }
-
-                if (sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")) {
+                } else {
                     intent = new Intent(GetRecruitmentNewsList.this, GetEmployerDetail.class);
                     startActivity(intent);
                     finish();
                 }
-
                 break;
 
             case R.id.menu_candidate_logout:
@@ -190,7 +190,6 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 finish();
                 Toast.makeText(GetRecruitmentNewsList.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                 break;
-
 
             default:
                 break;
@@ -203,10 +202,15 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-
             case R.id.fabBtnAddSp:
                 intent = new Intent(this, CreateRecruitmentNews.class);
                 startActivity(intent);
+                break;
+
+            case R.id.imgNotFound:
+                intent = new Intent(GetRecruitmentNewsList.this, GetRecruitmentNewsList.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }
