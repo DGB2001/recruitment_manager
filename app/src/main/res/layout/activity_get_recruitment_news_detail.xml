@@ -121,13 +121,27 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinnerMaster_technical"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_strip_round_corner_10"
-                android:enabled="false"
-                android:padding="15dp" />
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/spinnerMaster_technical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_strip_round_corner_10"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/master_technical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_strip_round_corner_10"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -140,18 +154,33 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinnerMaster_level"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_strip_round_corner_10"
-                android:enabled="false"
-                android:padding="15dp" />
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/spinnerMaster_level"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_strip_round_corner_10"
+                    android:enabled="false"
+                    android:padding="10dp" />
+
+                <EditText
+                    android:id="@+id/master_level"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_strip_round_corner_10"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
+
             <!-- Yêu cầu công việc -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:padding="10dp"
                 android:text="yêu cầu công việc"
                 android:textAllCaps="true"
@@ -190,7 +219,7 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnUpdate1"
+                        android:id="@+id/btnUpdate"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"

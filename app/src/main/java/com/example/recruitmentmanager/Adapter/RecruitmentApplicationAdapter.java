@@ -1,6 +1,7 @@
 package com.example.recruitmentmanager.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recruitmentmanager.Activity.UpdateResultApplication;
 import com.example.recruitmentmanager.Model.ApplicationInfo;
 import com.example.recruitmentmanager.R;
 
@@ -39,6 +41,7 @@ public class RecruitmentApplicationAdapter extends RecyclerView.Adapter<Recruitm
         if (applicationInfo == null) {
             return;
         }
+
         holder.imgv.setImageResource(R.drawable.ic_application);
         holder.tv_candidateName.setText(applicationInfo.getCandidate().getName());
         holder.tv_technical.setText(applicationInfo.getMaster_technical().getName());
@@ -63,23 +66,48 @@ public class RecruitmentApplicationAdapter extends RecyclerView.Adapter<Recruitm
             holder.tv_result.setText("Chưa có kết quả");
             holder.tv_result.setBackgroundResource(R.drawable.bg_application_sent);
             holder.tv_result.setTextColor(ContextCompat.getColor(context, R.color.txtsent));
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, UpdateResultApplication.class);
+                    intent.putExtra("applicationId",applicationInfo.getId());
+                    intent.putExtra("recruitmentNewsId",applicationInfo.getRecruitment_news_id());
+                    intent.putExtra("jobTittle",applicationInfo.getTitle());
+                    intent.putExtra("candidateName",applicationInfo.getCandidate().getName());
+                    intent.putExtra("candidatePhone",applicationInfo.getCandidate().getPhone_number());
+                    intent.putExtra("candidateAddress",applicationInfo.getCandidate().getAddress());
+                    intent.putExtra("applicationContent",applicationInfo.getContent());
+                    intent.putExtra("technicalName",applicationInfo.getMaster_technical().getName());
+                    intent.putExtra("levelName",applicationInfo.getMaster_level().getName());
+                    context.startActivity(intent);
+                }
+            });
         }
+
+
     }
 
     @Override
     public int getItemCount() {
+        if (applicationInfoList != null) {
+            return applicationInfoList.size();
+        }
+        else {
+        }
         return 0;
     }
 
     public static class RecruitmentApplicationViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        ImageView imgv;
+        ImageView imgv, imgNotFound;
         TextView tv_candidateName, tv_technical, tv_level, tv_result;
 
         public RecruitmentApplicationViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardView);
             imgv = itemView.findViewById(R.id.img_application);
+            imgNotFound = itemView.findViewById(R.id.imgNotFound);
             tv_candidateName = itemView.findViewById(R.id.tv_candidateName);
             tv_technical = itemView.findViewById(R.id.tv_technical);
             tv_level = itemView.findViewById(R.id.tv_level);

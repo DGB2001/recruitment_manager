@@ -1,7 +1,8 @@
 package com.example.recruitmentmanager.Model;
 
 public class ApplicationInfo {
-    String title;
+    int id, recruitment_news_id;
+    String title, content;
     Integer result;
     RecruitmentInfo recruitment_news;
     CandidateInfo candidate;
@@ -54,5 +55,29 @@ public class ApplicationInfo {
 
     public void setMaster_level(LevelInfo master_level) {
         this.master_level = master_level;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public int getRecruitment_news_id() {
+        return recruitment_news_id;
+    }
+
+    public void setRecruitment_news_id(int recruitment_news_id) {
+        this.recruitment_news_id = recruitment_news_id;
     }
 }

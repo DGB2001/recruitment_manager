@@ -8,17 +8,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -31,15 +27,13 @@ import com.example.recruitmentmanager.Model.User;
 import com.example.recruitmentmanager.R;
 import com.google.android.material.navigation.NavigationView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetCandidateInfoDetail extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class GetCandidateDetail extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     int idUserLogin;
     SharedPreferencesManager sharedPreferencesManager;
     EditText tvName, tvEmail, tvPhone, tvAddress, tvRole, tvStatus;
@@ -70,10 +64,16 @@ public class GetCandidateInfoDetail extends AppCompatActivity implements Navigat
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        nav_view.setCheckedItem(R.id.menu_candidate_tintuyendung);
+        nav_view.setCheckedItem(R.id.menu_recruitment_news);
 
         /********Hide or show menu items********/
         Menu menu = nav_view.getMenu();
+        if (sharedPreferencesManager.getUserAuthLogin().getRole().equals("Ứng viên")) {
+            menu.findItem(R.id.menu_create_recruitment_news).setVisible(false);
+        } else {
+            menu.findItem(R.id.menu_employer).setVisible(false);
+            menu.findItem(R.id.menu_history_application).setVisible(false);
+        }
     }
 
     private void AnhXa() {
@@ -114,6 +114,7 @@ public class GetCandidateInfoDetail extends AppCompatActivity implements Navigat
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
+                    Log.i("getCandidateDetail", "Successful: " + response.code());
                     User userInfo = response.body();
                     if (userInfo != null) {
                         tvName.setText(userInfo.getName());
@@ -128,12 +129,15 @@ public class GetCandidateInfoDetail extends AppCompatActivity implements Navigat
                             spinnerGender.setSelection(1);
                         }
                     }
+                    else {
+                        Log.e("getCandidateDetail", "Successful: " + response.code());
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                Log.e("getCandidateDetail", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -152,6 +156,7 @@ public class GetCandidateInfoDetail extends AppCompatActivity implements Navigat
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
+                    Log.i("updateCandidateDetail", "Successful: " + response.code());
                     tvName.setText(name);
                     tvPhone.setText(phone);
                     tvAddress.setText(address);
@@ -163,54 +168,18 @@ public class GetCandidateInfoDetail extends AppCompatActivity implements Navigat
                     } else {
                         spinnerGender.setSelection(1);
                     }
-                    Toast.makeText(GetCandidateInfoDetail.this, "thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GetCandidateDetail.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Log.e("updateCandidateDetail", "Failed: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.e("onFailure", "onFailure: " + t.getMessage());
+                Log.e("updateCandidateDetail", "onFailure: " + t.getMessage());
             }
         });
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Menu menu = nav_view.getMenu();
-        Intent intent;
-        switch (menuItem.getItemId()) {
-            case R.id.menu_candidate_tintuyendung:
-                intent = new Intent(GetCandidateInfoDetail.this, GetRecruitmentNewsList.class);
-                startActivity(intent);
-                break;
-
-            case R.id.menu_candidate_nhatuyendung:
-                intent = new Intent(GetCandidateInfoDetail.this, GetEmployerList.class);
-                startActivity(intent);
-                break;
-
-            case R.id.menu_candidate_thongtin:
-                break;
-
-            case R.id.menu_candidate_hotro:
-                break;
-
-            case R.id.menu_candidate_account:
-                break;
-
-            case R.id.menu_candidate_logout:
-                sharedPreferencesManager.signOut();
-                intent = new Intent(GetCandidateInfoDetail.this, SignIn.class);
-                startActivity(intent);
-                finish();
-                Toast.makeText(GetCandidateInfoDetail.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-                break;
-
-            default:
-                break;
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     @Override
@@ -238,14 +207,48 @@ public class GetCandidateInfoDetail extends AppCompatActivity implements Navigat
                 break;
 
             case R.id.btnDelete:
-                intent = new Intent(this, DeleteCandidate.class);
+                intent = new Intent(this, DeleteUser.class);
                 startActivity(intent);
                 break;
 
             default:
                 break;
-
         }
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Menu menu = nav_view.getMenu();
+        Intent intent;
+        switch (menuItem.getItemId()) {
+            case R.id.menu_recruitment_news:
+                intent = new Intent(GetCandidateDetail.this, GetRecruitmentNewsList.class);
+                startActivity(intent);
+                break;
+
+            case R.id.menu_employer:
+                intent = new Intent(GetCandidateDetail.this, GetEmployerList.class);
+                startActivity(intent);
+                break;
+
+            case R.id.menu_app_infor:
+                break;
+
+            case R.id.menu_app_support:
+                break;
+
+            case R.id.menu_sign_out:
+                sharedPreferencesManager.signOut();
+                intent = new Intent(GetCandidateDetail.this, SignIn.class);
+                startActivity(intent);
+                finish();
+                Toast.makeText(GetCandidateDetail.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }

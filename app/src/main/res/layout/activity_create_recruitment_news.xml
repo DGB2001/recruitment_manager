@@ -22,7 +22,6 @@
                 android:orientation="vertical">
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -32,9 +31,21 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="đăng tin tuyển dụng"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/bangers_medium"
+                        android:textColor="@color/black"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="left"
                         android:padding="10dp"
-                        android:text="Title"
+                        android:text="Công việc"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -91,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:padding="10dp"
-                        android:text="Description"
+                        android:text="mô tả công việc"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -109,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:padding="10dp"
-                        android:text="Salary"
+                        android:text="mức lương"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -127,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:padding="10dp"
-                        android:text="Quantity"
+                        android:text="số lượng"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -145,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:padding="10dp"
-                        android:text="Expired At"
+                        android:text="ngày hết hạn"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -178,7 +189,7 @@
                             android:textSize="17dp" />
 
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btnNopDon"
+                            android:id="@+id/btnDangTin"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

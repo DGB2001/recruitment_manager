@@ -60,6 +60,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
+            <ImageView
+                android:id="@+id/imgNotFound"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_marginTop="10dp"
+                android:visibility="invisible"
+                tools:srcCompat="@drawable/bg_no_item_found"
+                app:layout_constraintTop_toBottomOf="@id/search_view" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rc_EmployerList"
                 android:layout_width="match_parent"

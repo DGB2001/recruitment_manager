@@ -16,6 +16,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -114,4 +115,13 @@ public interface ApiService {
 
     @GET("recruitment-news/")
     Call<List<RecruitmentInfo>> getRecruitmentByTittle(@Query("title") String title, @Query("order_by") String order_by);
+
+    @GET("recruitment-news/{id}/applications")
+    Call<List<ApplicationInfo>> getRecruitmentApplication (@Path("id") int id);
+
+    @PATCH("recruitment-news/{recruitmentId}/applications/{applicationId}")
+    @FormUrlEncoded
+    Call<ApplicationInfo> updateApplicationResult (@Path("recruitmentId") int recruitmentId,
+                                        @Path("applicationId")int applicationId,
+                                        @Field("result") int result);
 }

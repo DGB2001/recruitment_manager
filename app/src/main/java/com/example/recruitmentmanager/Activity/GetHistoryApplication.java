@@ -19,12 +19,10 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.recruitmentmanager.Adapter.HistoryApplicationAdapter;
-import com.example.recruitmentmanager.Adapter.RecruitmentNewsAdapter;
 import com.example.recruitmentmanager.Adapter.SharedPreferencesManager;
 import com.example.recruitmentmanager.Data.ApiService;
 import com.example.recruitmentmanager.Data.ApiUtils;
 import com.example.recruitmentmanager.Model.ApplicationInfo;
-import com.example.recruitmentmanager.Model.RecruitmentInfo;
 import com.example.recruitmentmanager.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -54,7 +52,7 @@ public class GetHistoryApplication extends AppCompatActivity implements Navigati
         AnhXa();
         setOnClick();
         getHistoryApplication();
-        id=sharedPreferences.getUserAuthLogin().getCandidate_id();
+        id = sharedPreferences.getUserAuthLogin().getCandidate_id();
 
         /********Toolbar********/
         setSupportActionBar(toolbar);
@@ -64,10 +62,16 @@ public class GetHistoryApplication extends AppCompatActivity implements Navigati
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        nav_view.setCheckedItem(R.id.menu_candidate_tintuyendung);
+        nav_view.setCheckedItem(R.id.menu_recruitment_news);
 
         /********Hide or show menu items********/
         Menu menu = nav_view.getMenu();
+        if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
+            menu.findItem(R.id.menu_create_recruitment_news).setVisible(false);
+        } else {
+            menu.findItem(R.id.menu_employer).setVisible(false);
+            menu.findItem(R.id.menu_history_application).setVisible(false);
+        }
     }
 
     private void AnhXa() {
@@ -97,21 +101,16 @@ public class GetHistoryApplication extends AppCompatActivity implements Navigati
                     applicationInfoList = response.body();
                     HistoryApplicationAdapter historyApplicationAdapter = new HistoryApplicationAdapter(GetHistoryApplication.this, applicationInfoList);
                     rcvHistoryApplication.setAdapter(historyApplicationAdapter);
-                    Log.e("TAG", "1." + applicationInfoList.size());
+                    Log.e("getHistoryApplication", "Successful: " + response.code());
 
-                }
-                else {
-                    Log.e("TAG", "2." + response.message());
-                    Log.e("TAG", "0." + sharedPreferences.getUserAuthLogin().getCandidate_id());
-
-
+                } else {
+                    Log.e("getHistoryApplication", "Failed: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<ApplicationInfo>> call, Throwable t) {
-                Log.e("TAG", "3." + t.getMessage());
-
+                Log.e("getHistoryApplication", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -121,33 +120,30 @@ public class GetHistoryApplication extends AppCompatActivity implements Navigati
         Menu menu = nav_view.getMenu();
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.menu_candidate_tintuyendung:
+            case R.id.menu_recruitment_news:
                 intent = new Intent(GetHistoryApplication.this, GetRecruitmentNewsList.class);
                 startActivity(intent);
                 finish();
                 break;
 
-            case R.id.menu_candidate_nhatuyendung:
+            case R.id.menu_employer:
                 intent = new Intent(GetHistoryApplication.this, GetEmployerList.class);
                 startActivity(intent);
                 break;
 
-            case R.id.menu_candidate_history:
+            case R.id.menu_app_infor:
                 break;
 
-            case R.id.menu_candidate_thongtin:
+            case R.id.menu_app_support:
                 break;
 
-            case R.id.menu_candidate_hotro:
-                break;
-
-            case R.id.menu_candidate_account:
-                intent = new Intent(GetHistoryApplication.this, GetCandidateInfoDetail.class);
+            case R.id.menu_account_infor:
+                intent = new Intent(GetHistoryApplication.this, GetCandidateDetail.class);
                 startActivity(intent);
                 finish();
                 break;
 
-            case R.id.menu_candidate_logout:
+            case R.id.menu_sign_out:
                 sharedPreferences.signOut();
                 intent = new Intent(GetHistoryApplication.this, SignIn.class);
                 startActivity(intent);

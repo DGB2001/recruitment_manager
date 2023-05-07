@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".Activity.CreateApplication">
+    tools:context=".Activity.UpdateResultApplication">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,13 +20,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/banner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="450px"
-                    android:background="#59a3d8"
-                    tools:srcCompat="@drawable/banner_create_application" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -52,18 +45,83 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:padding="10dp"
+                        android:text="Ứng viên"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCandidateName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_strip_round_corner_10"
+                        android:text="Tên ứng viên"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:padding="10dp"
+                        android:text="Số điện thoại"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_strip_round_corner_10"
+                        android:text="Số điện thoại"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:padding="10dp"
+                        android:text="Địa chỉ"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_strip_round_corner_10"
+                        android:text="Địa chỉ"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:padding="10dp"
                         android:text="Nội dung"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/etContent"
+                    <TextView
+                        android:id="@+id/tvContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_strip_round_corner_10"
-                        android:hint="Nhập mô tả"
+                        android:text="Em xin ứng tuyển hahaha"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
                         android:padding="15dp" />
 
                     <TextView
@@ -77,12 +135,14 @@
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
-                    <Spinner
-                        android:id="@+id/spinnerMaster_level"
+                    <TextView
+                        android:id="@+id/tvLevel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_strip_round_corner_10"
-                        android:enabled="false"
+                        android:text="Level"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
                         android:padding="15dp" />
 
                     <TextView
@@ -96,12 +156,14 @@
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
-                    <Spinner
-                        android:id="@+id/spinnerMaster_technical"
+                    <TextView
+                        android:id="@+id/tvTechnical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_strip_round_corner_10"
-                        android:enabled="false"
+                        android:text="Chuyên môn"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
                         android:padding="15dp" />
 
                     <LinearLayout
@@ -111,24 +173,26 @@
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btnHuy"
+                            android:id="@+id/btnAccept"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_btn_blue_corner_10"
-                            android:text="Hủy"
-                            android:textColor="@color/white"
+                            android:background="@drawable/bg_application_accepted"
+                            android:text="Chấp nhận"
+                            android:fontFamily="@font/bangers_medium"
+                            android:textColor="@color/txtaccepted"
                             android:textSize="17dp" />
 
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btnNopDon"
+                            android:id="@+id/btnReject"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_btn_blue_corner_10"
-                            android:text="Nộp đơn"
-                            android:textColor="@color/white"
+                            android:background="@drawable/bg_application_rejected"
+                            android:text="Từ chối"
+                            android:fontFamily="@font/bangers_medium"
+                            android:textColor="@color/txtrejected"
                             android:textSize="17dp" />
                     </LinearLayout>
 

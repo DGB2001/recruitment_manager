@@ -5,24 +5,24 @@
         <item android:title="Menu">
             <menu>
                 <item
-                    android:id="@+id/menu_candidate_tintuyendung"
-                    android:icon="@drawable/ic_tintuyendung_menu"
+                    android:id="@+id/menu_recruitment_news"
+                    android:icon="@drawable/menu_recruitment_news"
                     android:title="Tin tuyển dụng" />
 
                 <item
-                    android:id="@+id/menu_candidate_nhatuyendung"
-                    android:icon="@drawable/ic_nhatuyendung_menu"
+                    android:id="@+id/menu_employer"
+                    android:icon="@drawable/menu_employer"
                     android:title="Nhà tuyển dụng" />
 
                 <item
-                    android:id="@+id/menu_candidate_history"
-                    android:icon="@drawable/ic_application_menu"
+                    android:id="@+id/menu_history_application"
+                    android:icon="@drawable/menu_history_application"
                     android:title="Lịch sử ứng tuyển" />
 
                 <item
-                    android:id="@+id/menu_employer_application"
-                    android:icon="@drawable/ic_application_menu"
-                    android:title="Hố sơ ứng tuyển" />
+                    android:id="@+id/menu_create_recruitment_news"
+                    android:icon="@drawable/menu_create_recruitment_news"
+                    android:title="Đăng tin tuyển dụng" />
             </menu>
         </item>
     </group>
@@ -31,13 +31,13 @@
         <item android:title="Ứng dụng">
             <menu>
                 <item
-                    android:id="@+id/menu_candidate_thongtin"
-                    android:icon="@drawable/ic_thongtinapp_menu"
+                    android:id="@+id/menu_app_infor"
+                    android:icon="@drawable/menu_app_infor"
                     android:title="Thông tin ứng dụng" />
 
                 <item
-                    android:id="@+id/menu_candidate_hotro"
-                    android:icon="@drawable/ic_hotro_menu"
+                    android:id="@+id/menu_app_support"
+                    android:icon="@drawable/menu_app_support"
                     android:title="Hỗ trợ" />
             </menu>
         </item>
@@ -47,13 +47,13 @@
         <item android:title="Cài đặt">
             <menu>
                 <item
-                    android:id="@+id/menu_candidate_account"
-                    android:icon="@drawable/ic_account_menu"
+                    android:id="@+id/menu_account_infor"
+                    android:icon="@drawable/menu_account_infor"
                     android:title="Tài khoản" />
 
                 <item
-                    android:id="@+id/menu_candidate_logout"
-                    android:icon="@drawable/ic_signout_menu"
+                    android:id="@+id/menu_sign_out"
+                    android:icon="@drawable/menu_sign_out"
                     android:title="Đăng xuất" />
             </menu>
         </item>
