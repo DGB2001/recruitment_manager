@@ -111,4 +111,7 @@ public interface ApiService {
                                                 @Field("salary") int salary,
                                                 @Field("quantity") int quantity,
                                                 @Field("expired_at") String expired_at);
+
+    @GET("recruitment-news/")
+    Call<List<RecruitmentInfo>> getRecruitmentByTittle(@Query("title") String title, @Query("order_by") String order_by);
 }
