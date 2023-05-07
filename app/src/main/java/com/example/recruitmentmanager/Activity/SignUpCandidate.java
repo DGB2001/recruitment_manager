@@ -31,7 +31,7 @@ public class SignUpCandidate extends AppCompatActivity implements View.OnClickLi
     private EditText editTextEmail, editTextPassword, editTextName, editTextPhone, editTextAddress;
     private Spinner spinnerGender;
     ArrayList<String> gender;
-    AppCompatButton btnSignUp;
+    AppCompatButton btnSignUpCandidate;
     int idGender;
 
     @Override
@@ -53,11 +53,11 @@ public class SignUpCandidate extends AppCompatActivity implements View.OnClickLi
         editTextPhone = findViewById(R.id.edtPhone);
         editTextAddress = findViewById(R.id.edtAddress);
         spinnerGender = findViewById(R.id.spinnerGender);
-        btnSignUp = findViewById(R.id.btnSignupEmployer);
+        btnSignUpCandidate = findViewById(R.id.btnSignupCandidate);
     }
 
     private void setOnClick() {
-        btnSignUp.setOnClickListener(this);
+        btnSignUpCandidate.setOnClickListener(this);
     }
 
     public void addItemGenderSpinner() {
@@ -146,7 +146,7 @@ public class SignUpCandidate extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnSignUp:
+            case R.id.btnSignupCandidate:
                 if (validateField()) {
                     signUpCandidate();
                 }
