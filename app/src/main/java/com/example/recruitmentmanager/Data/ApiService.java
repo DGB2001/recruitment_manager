@@ -99,4 +99,16 @@ public interface ApiService {
                                                     @Field("salary") int salary,
                                                     @Field("quantity") int quantity,
                                                     @Field("expired_at") String expired_at);
+
+    @PUT("recruitment-news/{id}")
+    @FormUrlEncoded
+    Call<RecruitmentInfo> updateRecruitmentNew (@Path("id") int id,
+                                                @Field("employer_id") int  employer_id,
+                                                @Field("master_technical_id") int master_technical_id,
+                                                @Field("master_level_id") int master_level_id,
+                                                @Field("title") String title,
+                                                @Field("description") String description,
+                                                @Field("salary") int salary,
+                                                @Field("quantity") int quantity,
+                                                @Field("expired_at") String expired_at);
 }

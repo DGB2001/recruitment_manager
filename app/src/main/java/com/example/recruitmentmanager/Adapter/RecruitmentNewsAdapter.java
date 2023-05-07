@@ -26,9 +26,6 @@ public class RecruitmentNewsAdapter extends RecyclerView.Adapter<RecruitmentNews
     private final List<RecruitmentInfo> recruitmentInfoList;
     private Context context;
 
-    SharedPreferencesManager sharedPreferences;
-
-
     public RecruitmentNewsAdapter(Activity Context, List<RecruitmentInfo> recruitmentInfoList) {
         this.recruitmentInfoList = recruitmentInfoList;
         this.context = Context;
@@ -58,26 +55,17 @@ public class RecruitmentNewsAdapter extends RecyclerView.Adapter<RecruitmentNews
         holder.img_quantity.setImageResource(R.drawable.ic_quantity);
         holder.img_time.setImageResource(R.drawable.ic_time);
 
-        sharedPreferences = new SharedPreferencesManager(context);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, GetRecruitmentNewDetail.class);
+                intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
+                intent.putExtra("idLevel", recruitmentInfo.getMaster_level().getId());
+                intent.putExtra("idTechnical", recruitmentInfo.getMaster_technical().getId());
 
-        if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
-            holder.cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, GetRecruitmentNewDetail.class);
-                    intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
-                    context.startActivity(intent);
-                }
-            });
-        } else {
-            holder.cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, MainActivity.class);
-                    context.startActivity(intent);
-                }
-            });
-        }
+                context.startActivity(intent);
+            }
+        });
 
     }
 
