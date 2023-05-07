@@ -3,20 +3,17 @@ package com.example.recruitmentmanager.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.recruitmentmanager.Activity.GetRecruitmentNewDetail;
-import com.example.recruitmentmanager.Activity.MainActivity;
+import com.example.recruitmentmanager.Activity.GetRecruitmentNewsDetail;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
 import com.example.recruitmentmanager.R;
 
@@ -58,11 +55,10 @@ public class RecruitmentNewsAdapter extends RecyclerView.Adapter<RecruitmentNews
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, GetRecruitmentNewDetail.class);
+                Intent intent = new Intent(context, GetRecruitmentNewsDetail.class);
                 intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
                 intent.putExtra("idLevel", recruitmentInfo.getMaster_level().getId());
                 intent.putExtra("idTechnical", recruitmentInfo.getMaster_technical().getId());
-
                 context.startActivity(intent);
             }
         });

@@ -25,11 +25,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DeleteCandidate extends AppCompatActivity implements View.OnClickListener {
+public class DeleteUser extends AppCompatActivity implements View.OnClickListener {
     ImageView img;
     AppCompatButton btnCancel, btnDelete;
     SharedPreferencesManager sharedPreferencesManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +61,15 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Log.i("LOG", "Code: " + response.code());
+                    Log.i("DeleteCandidate", "Successful: " + response.code());
+                } else {
+                    Log.e("DeleteCandidate", "Failed: " + response.code());
                 }
-
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-
+                Log.e("DeleteCandidate", "Failed: " + t.getMessage());
             }
         });
     }
@@ -81,22 +81,18 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Log.e("LOG1", "Code1: " + response.code());
+                    Log.i("DeleteEmployer", "Successful: " + response.code());
+                } else {
+                    Log.e("DeleteEmployer", "Failed: " + response.code());
                 }
-                else {
-                    Log.e("LOG1", "Code2: " + response.code());
-
-                }
-
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-
+                Log.e("DeleteEmployer", "Failed: " + t.getMessage());
             }
         });
     }
-
 
 
     private void DialogXoa(int gravity) {
@@ -130,21 +126,20 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
         btn_xoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sharedPreferencesManager.getUserAuthLogin().getRole().equals("Ứng viên")){
+                if (sharedPreferencesManager.getUserAuthLogin().getRole().equals("Ứng viên")) {
                     deleteCandidate();
                     sharedPreferencesManager.signOut();
-                    Toast.makeText(DeleteCandidate.this, "Xóa thành công", Toast.LENGTH_LONG).show();
-                    Log.e("tag", "1");
-                    Intent intent = new Intent(DeleteCandidate.this, SignIn.class);
+                    Toast.makeText(DeleteUser.this, "Xóa thành công", Toast.LENGTH_LONG).show();
+                    Log.i("DeleteCandiate", "Successful");
+                    Intent intent = new Intent(DeleteUser.this, SignIn.class);
                     startActivity(intent);
                     finish();
-                }
-                else {
+                } else {
                     deleteEmployer();
                     sharedPreferencesManager.signOut();
-                    Toast.makeText(DeleteCandidate.this, "Xóa thành công", Toast.LENGTH_LONG).show();
-                    Log.e("tag", "2");
-                    Intent intent = new Intent(DeleteCandidate.this, SignIn.class);
+                    Toast.makeText(DeleteUser.this, "Xóa thành công", Toast.LENGTH_LONG).show();
+                    Log.i("DeleteEmployer", "Successful");
+                    Intent intent = new Intent(DeleteUser.this, SignIn.class);
                     startActivity(intent);
                     finish();
                 }
@@ -160,13 +155,12 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
         dialog.show();
     }
 
-
     @Override
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
             case R.id.btnCancel:
-                intent = new Intent(this, GetCandidateInfoDetail.class);
+                intent = new Intent(this, GetCandidateDetail.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -178,8 +172,5 @@ public class DeleteCandidate extends AppCompatActivity implements View.OnClickLi
             default:
                 break;
         }
-
     }
-
-
 }

@@ -65,7 +65,6 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
         login_username_edt = findViewById(R.id.login_username_edt);
         cb_remember_me = findViewById(R.id.cb_remember_me);
         sharedPreferences = new SharedPreferencesManager(SignIn.this);
-
     }
 
     private void checkBox() {
@@ -130,7 +129,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<AuthLoginResponse> call, Throwable t) {
-                Log.e("onFailure", "onFailure: " + t.getMessage());
+                Log.e("userLogin", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -145,7 +144,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener {
                 break;
 
             case R.id.btnSignUp:
-                intent = new Intent(SignIn.this, StartScreen.class);
+                intent = new Intent(SignIn.this, ChooseRole.class);
                 startActivity(intent);
                 finish();
                 break;

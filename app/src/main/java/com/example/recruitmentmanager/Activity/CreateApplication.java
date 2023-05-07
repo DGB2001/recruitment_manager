@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateApplicationActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreateApplication extends AppCompatActivity implements View.OnClickListener {
     AppCompatButton btnHuy, btnNopDon;
     TextView tvTittle;
     EditText etContent;
@@ -48,7 +48,22 @@ public class CreateApplicationActivity extends AppCompatActivity implements View
         setOnClick();
         spinnerMaster_technical();
         spinnerMaster_level();
+        getAndSetData();
+    }
 
+    private void AnhXa() {
+        img = findViewById(R.id.banner);
+        img.setImageResource(R.drawable.banner_create_application);
+        btnHuy = findViewById(R.id.btnHuy);
+        btnNopDon = findViewById(R.id.btnNopDon);
+        tvTittle = findViewById(R.id.tvTittle);
+        etContent = findViewById(R.id.etContent);
+        spinnerMaster_technical = findViewById(R.id.spinnerMaster_technical);
+        spinnerMaster_level = findViewById(R.id.spinnerMaster_level);
+        sharedPreferencesManager = new SharedPreferencesManager(this);
+    }
+
+    private void getAndSetData() {
         Intent intent = getIntent();
         idRecruitmentNews = intent.getIntExtra("idRecruitmentNews", -1);
         technical_id = intent.getIntExtra("technicalRecruitmentNews", -1);
@@ -59,21 +74,8 @@ public class CreateApplicationActivity extends AppCompatActivity implements View
         tvTittle.setText(recruitment_news_tittle);
         spinnerMaster_technical.setSelection(technical_id - 1);
         spinnerMaster_level.setSelection(level_id - 1);
-
         spinnerMaster_level.setEnabled(true);
         spinnerMaster_technical.setEnabled(true);
-    }
-
-    private void AnhXa() {
-        img=findViewById(R.id.banner);
-        img.setImageResource(R.drawable.banner_create_application);
-        btnHuy = findViewById(R.id.btnHuy);
-        btnNopDon = findViewById(R.id.btnNopDon);
-        tvTittle = findViewById(R.id.tvTittle);
-        etContent = findViewById(R.id.etContent);
-        spinnerMaster_technical = findViewById(R.id.spinnerMaster_technical);
-        spinnerMaster_level = findViewById(R.id.spinnerMaster_level);
-        sharedPreferencesManager = new SharedPreferencesManager(this);
     }
 
     private void setOnClick() {
@@ -107,8 +109,7 @@ public class CreateApplicationActivity extends AppCompatActivity implements View
         this.spinnerMaster_level.setAdapter(adapter);
     }
 
-
-    private void NopDon() {
+    private void createApplication() {
         String Tittle = tvTittle.getText().toString();
         String Content = etContent.getText().toString();
         int Master_level = spinnerMaster_level.getSelectedItemPosition() + 1;
@@ -120,10 +121,13 @@ public class CreateApplicationActivity extends AppCompatActivity implements View
             @Override
             public void onResponse(Call<ApplicationResponse> call, Response<ApplicationResponse> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(CreateApplicationActivity.this, "Ứng tuyển thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CreateApplicationActivity.this, GetHistoryApplication.class);
+                    Log.i("createApplication", "Successful: " + response.code());
+                    Toast.makeText(CreateApplication.this, "Ứng tuyển thành công", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CreateApplication.this, GetHistoryApplication.class);
                     startActivity(intent);
                     finish();
+                } else {
+                    Log.e("createApplication", "Failed: " + response.code());
                 }
             }
 
@@ -140,13 +144,13 @@ public class CreateApplicationActivity extends AppCompatActivity implements View
         Intent intent;
         switch (view.getId()) {
             case R.id.btnHuy:
-                intent = new Intent(this, GetRecruitmentNewDetail.class);
+                intent = new Intent(this, GetRecruitmentNewsDetail.class);
                 startActivity(intent);
                 finish();
                 break;
 
             case R.id.btnNopDon:
-                NopDon();
+                createApplication();
                 break;
 
             default:

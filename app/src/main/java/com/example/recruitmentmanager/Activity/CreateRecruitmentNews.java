@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,18 +26,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateRecruitmentNews extends AppCompatActivity implements View.OnClickListener{
-    AppCompatButton btnHuy, btnNopDon;
-
+public class CreateRecruitmentNews extends AppCompatActivity implements View.OnClickListener {
+    AppCompatButton btnHuy, btnDangTin;
     EditText etTittle, etDescription, etSalary, etQuantity, etExpired_at;
     Spinner spinnerMaster_technical, spinnerMaster_level;
     ArrayList<String> technical, level;
-    private int employer_id, technical_id, level_id;
+    private int employer_id;
     SharedPreferencesManager sharedPreferencesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_create_recruitment_news);
         Anhxa();
         setOnClick();
@@ -46,7 +47,7 @@ public class CreateRecruitmentNews extends AppCompatActivity implements View.OnC
 
     private void Anhxa() {
         btnHuy = findViewById(R.id.btnHuy);
-        btnNopDon = findViewById(R.id.btnNopDon);
+        btnDangTin = findViewById(R.id.btnDangTin);
         etTittle = findViewById(R.id.etTittle);
         etDescription = findViewById(R.id.etDescription);
         etQuantity = findViewById(R.id.etQuantity);
@@ -56,10 +57,12 @@ public class CreateRecruitmentNews extends AppCompatActivity implements View.OnC
         spinnerMaster_level = findViewById(R.id.spinnerMaster_level);
         sharedPreferencesManager = new SharedPreferencesManager(this);
     }
+
     private void setOnClick() {
         btnHuy.setOnClickListener(this);
-        btnNopDon.setOnClickListener(this);
+        btnDangTin.setOnClickListener(this);
     }
+
     public void spinnerMaster_technical() {
         technical = new ArrayList<String>();
         technical.add("PHP");
@@ -86,8 +89,7 @@ public class CreateRecruitmentNews extends AppCompatActivity implements View.OnC
         this.spinnerMaster_level.setAdapter(adapter);
     }
 
-    private void TaoTin() {
-
+    private void createRecruitmentNews() {
         String title = etTittle.getText().toString();
         String description = etDescription.getText().toString();
         int salary = Integer.parseInt(String.valueOf(etSalary.getText().toString()));
@@ -98,16 +100,18 @@ public class CreateRecruitmentNews extends AppCompatActivity implements View.OnC
         employer_id = sharedPreferencesManager.getUserAuthLogin().getEmployer_id();
 
         ApiService apiService = ApiUtils.getAPIService();
-        Call<ApplicationResponse> applicationResponseCall = apiService.createRecruitmentNews( employer_id,master_technical, master_level, title, description, salary,quantity,expiredAt);
+        Call<ApplicationResponse> applicationResponseCall = apiService.createRecruitmentNews(employer_id, master_technical, master_level, title, description, salary, quantity, expiredAt);
         applicationResponseCall.enqueue(new Callback<ApplicationResponse>() {
             @Override
             public void onResponse(Call<ApplicationResponse> call, Response<ApplicationResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.e("onFailure", "1: " + response.code());
+                    Log.i("createRecruitmentNews", "Successful: " + response.code());
                     Toast.makeText(CreateRecruitmentNews.this, "Tạo tin thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CreateRecruitmentNews.this, GetRecruitmentNewsList.class);
                     startActivity(intent);
                     finish();
+                } else {
+                    Log.e("createRecruitmentNews", "Failed: " + response.code());
                 }
             }
 
@@ -116,7 +120,6 @@ public class CreateRecruitmentNews extends AppCompatActivity implements View.OnC
                 Log.e("onFailure", "onFailure: " + t.getMessage());
             }
         });
-
     }
 
     @Override
@@ -129,8 +132,8 @@ public class CreateRecruitmentNews extends AppCompatActivity implements View.OnC
                 finish();
                 break;
 
-            case R.id.btnNopDon:
-                TaoTin();
+            case R.id.btnDangTin:
+                createRecruitmentNews();
                 break;
 
             default:

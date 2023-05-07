@@ -1,18 +1,14 @@
 package com.example.recruitmentmanager.Activity;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,27 +17,25 @@ import android.widget.Toast;
 import com.example.recruitmentmanager.Adapter.SharedPreferencesManager;
 import com.example.recruitmentmanager.Data.ApiService;
 import com.example.recruitmentmanager.Data.ApiUtils;
-import com.example.recruitmentmanager.Model.AuthLoginResponse;
-import com.example.recruitmentmanager.Model.LevelInfo;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
-import com.example.recruitmentmanager.Model.TechnicalInfo;
-import com.example.recruitmentmanager.Model.User;
 import com.example.recruitmentmanager.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetRecruitmentNewDetail extends AppCompatActivity {
-    Button btnUngTuyen, btnUpdateRecruitmentNews;
+public class GetRecruitmentNewsDetail extends AppCompatActivity implements View.OnClickListener {
+    Button btnUngTuyen, btnUpdate, btnShowList;
     SharedPreferencesManager sharedPreferences;
     ArrayList<String> technical, level;
     Spinner spinnerMaster_technical, spinnerMaster_level;
     LinearLayout linearLayout;
     int technical_id, level_id;
-
     TextView tvtitle, tvcompanyName, tvSalary, tvQuantity, tvexpiredAt, tvtechnical, tvlevel, tvdecription;
     int idRecruitmentNews = -1;
 
@@ -52,19 +46,11 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         AnhXa();
-        idRecruitmentNews = getIntent().getIntExtra("idRecruitmentNews", -1);
-        getRecruitmentNewsDetail();
+        setOnClick();
         spinnerMaster_technical();
         spinnerMaster_level();
-        Intent intent = getIntent();
-        idRecruitmentNews = intent.getIntExtra("idRecruitmentNews", -1);
-        technical_id = intent.getIntExtra("idTechnical", -1);
-        level_id = intent.getIntExtra("idLevel", -1);
-        spinnerMaster_technical.setSelection(technical_id - 1);
-        spinnerMaster_level.setSelection(level_id - 1);
-
-
-
+        getAndSetData();
+        getRecruitmentNewsDetail();
 
         if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
             linearLayout.setVisibility(View.GONE);
@@ -74,21 +60,16 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
             tvexpiredAt.setEnabled(false);
             tvtechnical.setEnabled(false);
             tvlevel.setEnabled(false);
+            spinnerMaster_technical.setVisibility(View.GONE);
+            spinnerMaster_level.setVisibility(View.GONE);
             tvdecription.setEnabled(false);
         }
-
-        if (sharedPreferences.getUserAuthLogin().getRole().equals("Nhà tuyển dụng")) {
+        else {
             btnUngTuyen.setVisibility(View.GONE);
+            tvtechnical.setVisibility(View.GONE);
+            tvlevel.setVisibility(View.GONE);
         }
-
-        btnUpdateRecruitmentNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateRecruitmentNewsDetail();
-            }
-        });
     }
-
 
     private void AnhXa() {
         linearLayout = findViewById(R.id.btnEmployer);
@@ -100,9 +81,27 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
         tvQuantity = findViewById(R.id.job_quantity);
         tvtitle = findViewById(R.id.job_title);
         tvSalary = findViewById(R.id.job_salary);
+        tvtechnical = findViewById(R.id.master_technical);
+        tvlevel = findViewById(R.id.master_level);
         spinnerMaster_technical = findViewById(R.id.spinnerMaster_technical);
         spinnerMaster_level = findViewById(R.id.spinnerMaster_level);
-        btnUpdateRecruitmentNews = findViewById(R.id.btnUpdate1);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnShowList = findViewById(R.id.btnShowList);
+    }
+
+    private void getAndSetData() {
+        idRecruitmentNews = getIntent().getIntExtra("idRecruitmentNews", -1);
+        Intent intent = getIntent();
+        idRecruitmentNews = intent.getIntExtra("idRecruitmentNews", -1);
+        technical_id = intent.getIntExtra("idTechnical", -1);
+        level_id = intent.getIntExtra("idLevel", -1);
+        spinnerMaster_technical.setSelection(technical_id - 1);
+        spinnerMaster_level.setSelection(level_id - 1);
+    }
+
+    private void setOnClick(){
+        btnShowList.setOnClickListener(this);
+        btnUpdate.setOnClickListener(this);
     }
 
     public void spinnerMaster_technical() {
@@ -130,7 +129,61 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spinnerMaster_level.setAdapter(adapter);
     }
-    private void updateRecruitmentNewsDetail(){
+
+    private void getRecruitmentNewsDetail() {
+        ApiService apiService = ApiUtils.getAPIService();
+        Call<RecruitmentInfo> recruitmentInfo = apiService.getRecruitmentNewDetail(idRecruitmentNews);
+        recruitmentInfo.enqueue(new Callback<RecruitmentInfo>() {
+            @Override
+            public void onResponse(Call<RecruitmentInfo> call, Response<RecruitmentInfo> response) {
+                if (response.isSuccessful()) {
+                    Log.i("getRecruitmentNewsDetail", "Successful: " + response.code());
+                    RecruitmentInfo recruitmentInfo = response.body();
+                    if (recruitmentInfo != null) {
+                        tvtitle.setText(recruitmentInfo.getTitle().toString());
+                        tvcompanyName.setText(recruitmentInfo.getEmployer().getCompany_name().toString());
+                        tvdecription.setText(recruitmentInfo.getDescription().toString());
+                        tvSalary.setText(String.valueOf(recruitmentInfo.getSalary()));
+
+                        tvQuantity.setText(String.valueOf(recruitmentInfo.getQuantity()));
+                        tvtechnical.setText(recruitmentInfo.getMaster_technical().getName());
+                        tvlevel.setText(recruitmentInfo.getMaster_level().getName());
+                        String dateString = recruitmentInfo.getExpired_at().toString();
+                        SimpleDateFormat originalFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
+                        try {
+                            Date date = originalFormat.parse(dateString);
+                            String formattedDate = targetFormat.format(date);
+                            tvexpiredAt.setText(formattedDate);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    btnUngTuyen.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(GetRecruitmentNewsDetail.this, CreateApplication.class);
+                            intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
+                            intent.putExtra("tittleRecruitmentNews", recruitmentInfo.getTitle());
+                            intent.putExtra("technicalRecruitmentNews", recruitmentInfo.getMaster_technical().getId());
+                            intent.putExtra("levelRecruitmentNews", recruitmentInfo.getMaster_level().getId());
+                            startActivity(intent);
+                        }
+                    });
+                } else {
+                    Log.e("getRecruitmentNewsDetail", "Failed: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecruitmentInfo> call, Throwable t) {
+                Log.e("getRecruitmentNewsDetail", "onFailure:" + t.getMessage());
+            }
+        });
+    }
+
+
+    private void updateRecruitmentNewsDetail() {
         String title = String.valueOf(tvtitle.getText());
         String description = String.valueOf(tvdecription.getText());
         String expiredAt = String.valueOf(tvexpiredAt.getText());
@@ -140,79 +193,50 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
         int Master_technical = spinnerMaster_technical.getSelectedItemPosition() + 1;
         int employer_id = sharedPreferences.getUserAuthLogin().getEmployer_id();
 
-
-
         ApiService apiService = ApiUtils.getAPIService();
-        Call<RecruitmentInfo> recruitmentCall = apiService.updateRecruitmentNew(idRecruitmentNews,employer_id,Master_technical,Master_level,title,description,salary,quantity,expiredAt);
+        Call<RecruitmentInfo> recruitmentCall = apiService.updateRecruitmentNew(idRecruitmentNews, employer_id, Master_technical, Master_level, title, description, salary, quantity, expiredAt);
         recruitmentCall.enqueue(new Callback<RecruitmentInfo>() {
             @Override
             public void onResponse(Call<RecruitmentInfo> call, Response<RecruitmentInfo> response) {
-
                 if (response.isSuccessful()) {
-                    spinnerMaster_technical.setSelection(Master_technical-1);
-                    spinnerMaster_level.setSelection(Master_level-1);
+                    Log.e("updateRecruitmentNewsDetail", "Successful: " + response.code());
+                    spinnerMaster_technical.setSelection(Master_technical - 1);
+                    spinnerMaster_level.setSelection(Master_level - 1);
                     tvtitle.setText(title);
                     tvdecription.setText(description);
                     tvSalary.setText(String.valueOf(salary));
                     tvQuantity.setText(String.valueOf(quantity));
                     tvexpiredAt.setText(expiredAt);
-                    Toast.makeText(GetRecruitmentNewDetail.this, "thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent =new Intent(GetRecruitmentNewDetail.this,GetRecruitmentNewsList.class);
+                    Toast.makeText(GetRecruitmentNewsDetail.this, "thành công", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(GetRecruitmentNewsDetail.this, GetRecruitmentNewsList.class);
                     startActivity(intent);
                     finish();
-                }
-                else{
-                    Log.e("onFailure", "onFailure: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RecruitmentInfo> call, Throwable t) {
-                Log.e("onFailure", "onFailure: " + t.getMessage());
-            }
-        });
-    }
-
-
-    private void getRecruitmentNewsDetail() {
-        ApiService apiService = ApiUtils.getAPIService();
-        Call<RecruitmentInfo> recruitmentInfo = apiService.getRecruitmentNewDetail(idRecruitmentNews);
-        recruitmentInfo.enqueue(new Callback<RecruitmentInfo>() {
-            @Override
-            public void onResponse(Call<RecruitmentInfo> call, Response<RecruitmentInfo> response) {
-                if (response.isSuccessful()) {
-                    RecruitmentInfo recruitmentInfo = response.body();
-                    if (recruitmentInfo != null) {
-                        tvtitle.setText(recruitmentInfo.getTitle().toString());
-                        tvcompanyName.setText(recruitmentInfo.getEmployer().getCompany_name().toString());
-                        tvdecription.setText(recruitmentInfo.getDescription().toString());
-                        tvSalary.setText(String.valueOf(recruitmentInfo.getSalary()));
-                        tvexpiredAt.setText(recruitmentInfo.getExpired_at().toString());
-                      //  tvtechnical.setText(recruitmentInfo.getMaster_technical().getName().toString());
-                        //tvlevel.setText(recruitmentInfo.getMaster_level().getName().toString());
-
-                        tvQuantity.setText(String.valueOf(recruitmentInfo.getQuantity()));
-                    }
-                    btnUngTuyen.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(GetRecruitmentNewDetail.this, CreateApplicationActivity.class);
-                            intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
-                            intent.putExtra("tittleRecruitmentNews", recruitmentInfo.getTitle());
-                            intent.putExtra("technicalRecruitmentNews", recruitmentInfo.getMaster_technical().getId());
-                            intent.putExtra("levelRecruitmentNews", recruitmentInfo.getMaster_level().getId());
-                            startActivity(intent);
-                        }
-                    });
+                } else {
+                    Log.e("updateRecruitmentNewsDetail", "Failed: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<RecruitmentInfo> call, Throwable t) {
-                Log.e("TAG", "err." + t.getMessage());
+                Log.e("updateRecruitmentNewsDetail", "onFailure: " + t.getMessage());
             }
         });
-
     }
 
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()){
+            case R.id.btnUpdate:
+                updateRecruitmentNewsDetail();
+                break;
+
+            case R.id.btnShowList:
+                intent = new Intent(GetRecruitmentNewsDetail.this, GetRecruitmentApplicationList.class);
+                intent.putExtra("idRecruitmentNews", idRecruitmentNews);
+                intent.putExtra("jobTittle", tvtitle.getText().toString());
+                startActivity(intent);
+                break;
+        }
+    }
 }
