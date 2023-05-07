@@ -35,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetRecruitmentNewDetail extends AppCompatActivity {
-    Button btnUngTuyen, btnUpdateRecruitmentNews;
+    Button btnUngTuyen, btnUpdateRecruitmentNews, btnShowList;
     SharedPreferencesManager sharedPreferences;
     ArrayList<String> technical, level;
     Spinner spinnerMaster_technical, spinnerMaster_level;
@@ -87,6 +87,18 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
                 updateRecruitmentNewsDetail();
             }
         });
+
+        btnShowList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(GetRecruitmentNewDetail.this,GetRecruitmentApplicationList.class);
+                intent1.putExtra("idRecruitmentNews",idRecruitmentNews);
+                intent1.putExtra("jobTittle",tvtitle.getText().toString());
+                startActivity(intent1);
+            }
+        });
+
+
     }
 
 
@@ -103,6 +115,7 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
         spinnerMaster_technical = findViewById(R.id.spinnerMaster_technical);
         spinnerMaster_level = findViewById(R.id.spinnerMaster_level);
         btnUpdateRecruitmentNews = findViewById(R.id.btnUpdate1);
+        btnShowList=findViewById(R.id.btnShowList);
     }
 
     public void spinnerMaster_technical() {
@@ -139,8 +152,6 @@ public class GetRecruitmentNewDetail extends AppCompatActivity {
         int Master_level = spinnerMaster_level.getSelectedItemPosition() + 1;
         int Master_technical = spinnerMaster_technical.getSelectedItemPosition() + 1;
         int employer_id = sharedPreferences.getUserAuthLogin().getEmployer_id();
-
-
 
         ApiService apiService = ApiUtils.getAPIService();
         Call<RecruitmentInfo> recruitmentCall = apiService.updateRecruitmentNew(idRecruitmentNews,employer_id,Master_technical,Master_level,title,description,salary,quantity,expiredAt);

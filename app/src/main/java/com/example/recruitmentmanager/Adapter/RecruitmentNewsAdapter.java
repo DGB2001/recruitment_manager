@@ -62,7 +62,6 @@ public class RecruitmentNewsAdapter extends RecyclerView.Adapter<RecruitmentNews
                 intent.putExtra("idRecruitmentNews", recruitmentInfo.getId());
                 intent.putExtra("idLevel", recruitmentInfo.getMaster_level().getId());
                 intent.putExtra("idTechnical", recruitmentInfo.getMaster_technical().getId());
-
                 context.startActivity(intent);
             }
         });
