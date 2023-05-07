@@ -57,10 +57,14 @@ public class GetRecruitmentNewsDetail extends AppCompatActivity implements View.
             tvexpiredAt.setEnabled(false);
             tvtechnical.setEnabled(false);
             tvlevel.setEnabled(false);
+            spinnerMaster_technical.setVisibility(View.GONE);
+            spinnerMaster_level.setVisibility(View.GONE);
             tvdecription.setEnabled(false);
         }
         else {
             btnUngTuyen.setVisibility(View.GONE);
+            tvtechnical.setVisibility(View.GONE);
+            tvlevel.setVisibility(View.GONE);
         }
     }
 
@@ -74,6 +78,8 @@ public class GetRecruitmentNewsDetail extends AppCompatActivity implements View.
         tvQuantity = findViewById(R.id.job_quantity);
         tvtitle = findViewById(R.id.job_title);
         tvSalary = findViewById(R.id.job_salary);
+        tvtechnical = findViewById(R.id.master_technical);
+        tvlevel = findViewById(R.id.master_level);
         spinnerMaster_technical = findViewById(R.id.spinnerMaster_technical);
         spinnerMaster_level = findViewById(R.id.spinnerMaster_level);
         btnUpdate = findViewById(R.id.btnUpdate);
@@ -137,6 +143,8 @@ public class GetRecruitmentNewsDetail extends AppCompatActivity implements View.
                         tvSalary.setText(String.valueOf(recruitmentInfo.getSalary()));
                         tvexpiredAt.setText(recruitmentInfo.getExpired_at().toString());
                         tvQuantity.setText(String.valueOf(recruitmentInfo.getQuantity()));
+                        tvtechnical.setText(recruitmentInfo.getMaster_technical().getName());
+                        tvlevel.setText(recruitmentInfo.getMaster_level().getName());
                     }
                     btnUngTuyen.setOnClickListener(new View.OnClickListener() {
                         @Override
