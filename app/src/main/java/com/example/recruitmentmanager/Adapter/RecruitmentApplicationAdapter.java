@@ -41,6 +41,7 @@ public class RecruitmentApplicationAdapter extends RecyclerView.Adapter<Recruitm
         if (applicationInfo == null) {
             return;
         }
+
         holder.imgv.setImageResource(R.drawable.ic_application);
         holder.tv_candidateName.setText(applicationInfo.getCandidate().getName());
         holder.tv_technical.setText(applicationInfo.getMaster_technical().getName());
@@ -92,18 +93,21 @@ public class RecruitmentApplicationAdapter extends RecyclerView.Adapter<Recruitm
         if (applicationInfoList != null) {
             return applicationInfoList.size();
         }
+        else {
+        }
         return 0;
     }
 
     public static class RecruitmentApplicationViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        ImageView imgv;
+        ImageView imgv, imgNotFound;
         TextView tv_candidateName, tv_technical, tv_level, tv_result;
 
         public RecruitmentApplicationViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardView);
             imgv = itemView.findViewById(R.id.img_application);
+            imgNotFound = itemView.findViewById(R.id.imgNotFound);
             tv_candidateName = itemView.findViewById(R.id.tv_candidateName);
             tv_technical = itemView.findViewById(R.id.tv_technical);
             tv_level = itemView.findViewById(R.id.tv_level);

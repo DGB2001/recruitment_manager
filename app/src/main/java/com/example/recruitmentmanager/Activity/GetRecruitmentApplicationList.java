@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.recruitmentmanager.Adapter.HistoryApplicationAdapter;
@@ -27,6 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetRecruitmentApplicationList extends AppCompatActivity {
+    ImageView imgNotFound;
     TextView tvJobTittle;
     SharedPreferencesManager sharedPreferences;
     RecyclerView rcvRecruitmentApplication;
@@ -51,6 +54,7 @@ public class GetRecruitmentApplicationList extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        imgNotFound=findViewById(R.id.imgNotFound);
         tvJobTittle=findViewById(R.id.tvJobTittle);
         applicationInfoList = new ArrayList<>();
         sharedPreferences=new SharedPreferencesManager(this);
@@ -69,9 +73,14 @@ public class GetRecruitmentApplicationList extends AppCompatActivity {
             public void onResponse(Call<List<ApplicationInfo>> call, Response<List<ApplicationInfo>> response) {
                 if (response.isSuccessful()) {
                     applicationInfoList = response.body();
-                    RecruitmentApplicationAdapter recruitmentApplicationAdapter = new RecruitmentApplicationAdapter(GetRecruitmentApplicationList.this, applicationInfoList);
-                    rcvRecruitmentApplication.setAdapter(recruitmentApplicationAdapter);
-
+                    if(applicationInfoList.size()>0){
+                        RecruitmentApplicationAdapter recruitmentApplicationAdapter = new RecruitmentApplicationAdapter(GetRecruitmentApplicationList.this, applicationInfoList);
+                        rcvRecruitmentApplication.setAdapter(recruitmentApplicationAdapter);
+                    }
+                    else {
+                        imgNotFound.setVisibility(View.VISIBLE);
+                        imgNotFound.setImageResource(R.drawable.bg_no_item_found);
+                    }
                 }
                 else {
 
