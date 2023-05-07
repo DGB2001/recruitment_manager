@@ -130,7 +130,7 @@ public class SignUpEmployer extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnSignUp:
+            case R.id.btnSignupEmployer:
                 if (validateField()) {
                     signUpEmployer();
                 }
