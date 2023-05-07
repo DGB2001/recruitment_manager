@@ -82,10 +82,10 @@ public class UpdateResultApplication extends AppCompatActivity implements View.O
 
     private void updateApplicationResult(int result){
         ApiService apiService = ApiUtils.getAPIService();
-        Call<List<ApplicationInfo>> applicationistCall = apiService.updateApplicationResult(recruitmentNewsId,applicationId,result);
-        applicationistCall.enqueue(new Callback<List<ApplicationInfo>>() {
+        Call<ApplicationInfo> applicationistCall = apiService.updateApplicationResult(recruitmentNewsId,applicationId,result);
+        applicationistCall.enqueue(new Callback<ApplicationInfo> () {
             @Override
-            public void onResponse(Call<List<ApplicationInfo>> call, Response<List<ApplicationInfo>> response) {
+            public void onResponse(Call<ApplicationInfo> call, Response<ApplicationInfo> response) {
                 Log.e("err","1:recruitmentNewsId " + recruitmentNewsId);
                 Log.e("err","2:applicationId " + applicationId);
                 Log.e("err","3:result " + result);
@@ -103,9 +103,8 @@ public class UpdateResultApplication extends AppCompatActivity implements View.O
             }
 
             @Override
-            public void onFailure(Call<List<ApplicationInfo>> call, Throwable t) {
+            public void onFailure(Call<ApplicationInfo> call, Throwable t) {
                 Log.e("onFailure","onFailure: " + t.getMessage());
-
             }
         });
 

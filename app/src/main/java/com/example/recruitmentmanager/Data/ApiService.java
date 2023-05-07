@@ -118,7 +118,7 @@ public interface ApiService {
 
     @PATCH("recruitment-news/{recruitmentId}/applications/{applicationId}")
     @FormUrlEncoded
-    Call<List<ApplicationInfo>> updateApplicationResult (@Path("recruitmentId") int recruitmentId,
+    Call<ApplicationInfo> updateApplicationResult (@Path("recruitmentId") int recruitmentId,
                                         @Path("applicationId")int applicationId,
                                         @Field("result") int result);
 }
