@@ -102,7 +102,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     private void setOnClick() {
         fabBtnAddSp.setOnClickListener(this);
         nav_view.setNavigationItemSelectedListener(this);
-        searchView.setOnQueryTextListener(this);
+        //searchView.setOnQueryTextListener(this);
     }
 
     public void getRecruitmentNewsList() {

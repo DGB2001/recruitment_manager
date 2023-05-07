@@ -42,7 +42,6 @@
                 app:title="DANH SÁCH TIN TUYỂN DỤNG"
                 app:titleTextColor="@color/white" />
 
-
             <SearchView
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
