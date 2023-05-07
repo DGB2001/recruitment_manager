@@ -79,7 +79,7 @@ public class RecruitmentApplicationAdapter extends RecyclerView.Adapter<Recruitm
                     intent.putExtra("candidateAddress",applicationInfo.getCandidate().getAddress());
                     intent.putExtra("applicationContent",applicationInfo.getContent());
                     intent.putExtra("technicalName",applicationInfo.getMaster_technical().getName());
-                    intent.putExtra("levelName",applicationInfo.getMaster_technical().getName());
+                    intent.putExtra("levelName",applicationInfo.getMaster_level().getName());
                     context.startActivity(intent);
                 }
             });

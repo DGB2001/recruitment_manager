@@ -86,9 +86,6 @@ public class UpdateResultApplication extends AppCompatActivity implements View.O
         applicationistCall.enqueue(new Callback<ApplicationInfo> () {
             @Override
             public void onResponse(Call<ApplicationInfo> call, Response<ApplicationInfo> response) {
-                Log.e("err","1:recruitmentNewsId " + recruitmentNewsId);
-                Log.e("err","2:applicationId " + applicationId);
-                Log.e("err","3:result " + result);
                 if (response.isSuccessful()) {
                     Toast.makeText(UpdateResultApplication.this, "Thành công", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(UpdateResultApplication.this,GetRecruitmentApplicationList.class);
@@ -96,17 +93,17 @@ public class UpdateResultApplication extends AppCompatActivity implements View.O
                     intent.putExtra("jobTittle",jobTittle);
                     startActivity(intent);
                     finish();
-                    Log.e("err","err: " + response.code());
+                    Log.i("updateApplicationResult","Successful: " + response.code());
                 }
                 else {
-                    Log.e("err","err: " + response.code());
+                    Log.e("updateApplicationResult","Failed: " + response.code());
 
                 }
             }
 
             @Override
             public void onFailure(Call<ApplicationInfo> call, Throwable t) {
-                Log.e("onFailure","onFailure: " + t.getMessage());
+                Log.e("updateApplicationResult","onFailure: " + t.getMessage());
             }
         });
 
