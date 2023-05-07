@@ -237,7 +237,7 @@ public class GetCandidateDetail extends AppCompatActivity implements NavigationV
             case R.id.menu_app_support:
                 break;
 
-            case R.id.menu_candidate_logout:
+            case R.id.menu_sign_out:
                 sharedPreferencesManager.signOut();
                 intent = new Intent(GetCandidateDetail.this, SignIn.class);
                 startActivity(intent);

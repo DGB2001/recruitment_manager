@@ -160,6 +160,11 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         Menu menu = nav_view.getMenu();
         Intent intent;
         switch (menuItem.getItemId()) {
+            case R.id.menu_create_recruitment_news:
+                intent = new Intent(GetRecruitmentNewsList.this, CreateRecruitmentNews.class);
+                startActivity(intent);
+                break;
+
             case R.id.menu_employer:
                 intent = new Intent(GetRecruitmentNewsList.this, GetEmployerList.class);
                 startActivity(intent);
@@ -171,7 +176,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 finish();
                 break;
 
-            case R.id.menu_candidate_account:
+            case R.id.menu_account_infor:
                 if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
                     intent = new Intent(GetRecruitmentNewsList.this, GetCandidateDetail.class);
                     startActivity(intent);
@@ -183,7 +188,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 }
                 break;
 
-            case R.id.menu_candidate_logout:
+            case R.id.menu_sign_out:
                 sharedPreferences.signOut();
                 intent = new Intent(GetRecruitmentNewsList.this, SignIn.class);
                 startActivity(intent);

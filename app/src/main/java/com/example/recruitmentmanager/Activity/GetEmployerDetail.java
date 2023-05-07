@@ -186,6 +186,12 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
         Menu menu = nav_view.getMenu();
         Intent intent;
         switch (item.getItemId()) {
+            case R.id.menu_create_recruitment_news:
+                intent = new Intent(GetEmployerDetail.this, CreateRecruitmentNews.class);
+                startActivity(intent);
+                finish();
+                break;
+
             case R.id.menu_recruitment_news:
                 intent = new Intent(GetEmployerDetail.this, GetRecruitmentNewsList.class);
                 startActivity(intent);
@@ -198,7 +204,7 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
             case R.id.menu_app_support:
                 break;
 
-            case R.id.menu_candidate_account:
+            case R.id.menu_account_infor:
                 if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
                     intent = new Intent(GetEmployerDetail.this, GetCandidateDetail.class);
                     startActivity(intent);
@@ -210,7 +216,7 @@ public class GetEmployerDetail extends AppCompatActivity implements NavigationVi
                 }
                 break;
 
-            case R.id.menu_candidate_logout:
+            case R.id.menu_sign_out:
                 sharedPreferences.signOut();
                 intent = new Intent(GetEmployerDetail.this, SignIn.class);
                 startActivity(intent);

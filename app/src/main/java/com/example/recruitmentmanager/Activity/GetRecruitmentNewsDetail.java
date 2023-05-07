@@ -20,7 +20,10 @@ import com.example.recruitmentmanager.Data.ApiUtils;
 import com.example.recruitmentmanager.Model.RecruitmentInfo;
 import com.example.recruitmentmanager.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -141,10 +144,20 @@ public class GetRecruitmentNewsDetail extends AppCompatActivity implements View.
                         tvcompanyName.setText(recruitmentInfo.getEmployer().getCompany_name().toString());
                         tvdecription.setText(recruitmentInfo.getDescription().toString());
                         tvSalary.setText(String.valueOf(recruitmentInfo.getSalary()));
-                        tvexpiredAt.setText(recruitmentInfo.getExpired_at().toString());
+
                         tvQuantity.setText(String.valueOf(recruitmentInfo.getQuantity()));
                         tvtechnical.setText(recruitmentInfo.getMaster_technical().getName());
                         tvlevel.setText(recruitmentInfo.getMaster_level().getName());
+                        String dateString = recruitmentInfo.getExpired_at().toString();
+                        SimpleDateFormat originalFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
+                        try {
+                            Date date = originalFormat.parse(dateString);
+                            String formattedDate = targetFormat.format(date);
+                            tvexpiredAt.setText(formattedDate);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
                     btnUngTuyen.setOnClickListener(new View.OnClickListener() {
                         @Override

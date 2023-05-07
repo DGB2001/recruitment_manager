@@ -137,13 +137,13 @@ public class GetHistoryApplication extends AppCompatActivity implements Navigati
             case R.id.menu_app_support:
                 break;
 
-            case R.id.menu_candidate_account:
+            case R.id.menu_account_infor:
                 intent = new Intent(GetHistoryApplication.this, GetCandidateDetail.class);
                 startActivity(intent);
                 finish();
                 break;
 
-            case R.id.menu_candidate_logout:
+            case R.id.menu_sign_out:
                 sharedPreferences.signOut();
                 intent = new Intent(GetHistoryApplication.this, SignIn.class);
                 startActivity(intent);
