@@ -113,6 +113,9 @@ public interface ApiService {
                                                 @Field("quantity") int quantity,
                                                 @Field("expired_at") String expired_at);
 
+    @GET("recruitment-news/")
+    Call<List<RecruitmentInfo>> getRecruitmentByTittle(@Query("title") String title, @Query("order_by") String order_by);
+
     @GET("recruitment-news/{id}/applications")
     Call<List<ApplicationInfo>> getRecruitmentApplication (@Path("id") int id);
 

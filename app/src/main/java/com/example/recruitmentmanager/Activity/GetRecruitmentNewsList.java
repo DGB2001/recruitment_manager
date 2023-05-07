@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+
+import android.widget.SearchView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -37,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetRecruitmentNewsList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class GetRecruitmentNewsList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SearchView.OnQueryTextListener {
     ImageView imgNotFound;
     NavigationView nav_view;
     Toolbar toolbar;
@@ -46,6 +48,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     RecyclerView rc_RecruitmentNewsList;
     List<RecruitmentInfo> recruitmentInfoList;
     FloatingActionButton fabBtnAddSp;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     }
 
     private void AnhXa() {
+        searchView = findViewById(R.id.search_view);
         imgNotFound = findViewById(R.id.imgNotFound);
         fabBtnAddSp = findViewById(R.id.fabBtnAddSp);
         drawerLayout = findViewById(R.id.drawerlayout);
@@ -97,6 +101,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     private void setOnClick() {
         fabBtnAddSp.setOnClickListener(this);
         nav_view.setNavigationItemSelectedListener(this);
+        //searchView.setOnQueryTextListener(this);
     }
 
     public void getRecruitmentNewsList() {
@@ -151,6 +156,26 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
             @Override
             public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
                 Log.e("getRecruitmentEmployerList", "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getRecruitmentByTittle(String tittle) {
+        ApiService apiService = ApiUtils.getAPIService();
+        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentByTittle(tittle, "desc");
+        recruitmentNewsListCall.enqueue(new Callback<List<RecruitmentInfo>>() {
+            @Override
+            public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
+                if (response.isSuccessful()) {
+                    recruitmentInfoList = response.body();
+                    RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
+                    rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
+                Log.e("onFailure", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -218,5 +243,17 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        getRecruitmentByTittle(s);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        getRecruitmentByTittle(s);
+        return false;
     }
 }
