@@ -20,7 +20,11 @@ import com.example.recruitmentmanager.Data.ApiUtils;
 import com.example.recruitmentmanager.Model.ApplicationResponse;
 import com.example.recruitmentmanager.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,11 +94,55 @@ public class CreateRecruitmentNews extends AppCompatActivity implements View.OnC
     }
 
     private void createRecruitmentNews() {
+        int salary;
+        int quantity;
+        String expiredAt;
+
+        if (etTittle.length() == 0) {
+            etTittle.requestFocus();
+            etTittle.setError("Vui lòng điền đầy đủ thông tin ");
+        }
+
+        if (etDescription.length() == 0) {
+            etDescription.requestFocus();
+            etDescription.setError("Vui lòng điền đầy đủ thông thin");
+        }
+
+        if (etSalary.length() == 0) {
+            salary = 0;
+            etSalary.setError("Mức lương phải lớn hơn 0");
+        } else {
+            salary = Integer.parseInt(String.valueOf(etSalary.getText().toString()));
+        }
+
+        if (etQuantity.length() == 0) {
+            quantity = 0;
+            etQuantity.setError("Số lượng phải lớn hơn 0");
+        } else {
+            quantity = Integer.parseInt(String.valueOf(etSalary.getText().toString()));
+        }
+
+        if (etExpired_at.length() == 0) {
+            etExpired_at.setError("Vui lòng điền đầy đủ thông tin");
+        } else {
+            Calendar calendar = Calendar.getInstance();
+            Date currentDate = calendar.getTime();
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+            Date inputDate = null;
+            try {
+                inputDate = format.parse(etExpired_at.getText().toString());
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            if (inputDate.compareTo(currentDate) < 0) {
+                etExpired_at.requestFocus();
+                etExpired_at.setError("Không được nhỏ hơn ngày hiện tại");
+            }
+        }
+
+        expiredAt = etExpired_at.getText().toString();
         String title = etTittle.getText().toString();
         String description = etDescription.getText().toString();
-        int salary = Integer.parseInt(String.valueOf(etSalary.getText().toString()));
-        int quantity = Integer.parseInt(String.valueOf(etQuantity.getText().toString()));
-        String expiredAt = etExpired_at.getText().toString();
         int master_level = spinnerMaster_level.getSelectedItemPosition() + 1;
         int master_technical = spinnerMaster_technical.getSelectedItemPosition() + 1;
         employer_id = sharedPreferencesManager.getUserAuthLogin().getEmployer_id();

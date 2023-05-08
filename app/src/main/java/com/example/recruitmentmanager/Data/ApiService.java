@@ -124,4 +124,9 @@ public interface ApiService {
     Call<ApplicationInfo> updateApplicationResult (@Path("recruitmentId") int recruitmentId,
                                         @Path("applicationId")int applicationId,
                                         @Field("result") int result);
+
+    @GET("recruitment-news/")
+    Call<List<RecruitmentInfo>> getRecruitmentEmployerListBySalary(@Query("employer_id") int employer_id,
+                                                                   @Query("salary") int salary,
+                                                                   @Query("order_by") String order_by);
 }

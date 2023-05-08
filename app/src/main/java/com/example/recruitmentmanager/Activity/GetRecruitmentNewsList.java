@@ -101,7 +101,7 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
     private void setOnClick() {
         fabBtnAddSp.setOnClickListener(this);
         nav_view.setNavigationItemSelectedListener(this);
-        //searchView.setOnQueryTextListener(this);
+        searchView.setOnQueryTextListener(this);
     }
 
     public void getRecruitmentNewsList() {
@@ -128,6 +128,26 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
             @Override
             public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
                 Log.e("getRecruitmentNewsList", "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getRecruitmentByTittle(String tittle) {
+        ApiService apiService = ApiUtils.getAPIService();
+        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentByTittle(tittle, "desc");
+        recruitmentNewsListCall.enqueue(new Callback<List<RecruitmentInfo>>() {
+            @Override
+            public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
+                if (response.isSuccessful()) {
+                    recruitmentInfoList = response.body();
+                    RecruitmentNewsAdapter recruitmentNewsAdapter = new RecruitmentNewsAdapter(GetRecruitmentNewsList.this, recruitmentInfoList);
+                    rc_RecruitmentNewsList.setAdapter(recruitmentNewsAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RecruitmentInfo>> call, Throwable t) {
+                Log.e("onFailure", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -160,9 +180,9 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
         });
     }
 
-    public void getRecruitmentByTittle(String tittle) {
+    public void getRecruitmentEmployerBySalary(int salary) {
         ApiService apiService = ApiUtils.getAPIService();
-        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentByTittle(tittle, "desc");
+        Call<List<RecruitmentInfo>> recruitmentNewsListCall = apiService.getRecruitmentEmployerListBySalary(sharedPreferences.getUserAuthLogin().getEmployer_id(), salary, "desc");
         recruitmentNewsListCall.enqueue(new Callback<List<RecruitmentInfo>>() {
             @Override
             public void onResponse(Call<List<RecruitmentInfo>> call, Response<List<RecruitmentInfo>> response) {
@@ -247,13 +267,30 @@ public class GetRecruitmentNewsList extends AppCompatActivity implements Navigat
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        getRecruitmentByTittle(s);
+        if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
+            getRecruitmentByTittle(s);
+        } else {
+            if (s.length() == 0) {
+                getRecruitmentEmployerList();
+            } else {
+                getRecruitmentEmployerBySalary(Integer.parseInt(s));
+            }
+            getRecruitmentEmployerBySalary(Integer.parseInt(s));
+        }
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
-        getRecruitmentByTittle(s);
+        if (sharedPreferences.getUserAuthLogin().getRole().equals("Ứng viên")) {
+            getRecruitmentByTittle(s);
+        } else {
+            if (s.length() == 0) {
+                getRecruitmentEmployerList();
+            } else {
+                getRecruitmentEmployerBySalary(Integer.parseInt(s));
+            }
+        }
         return false;
     }
 }
