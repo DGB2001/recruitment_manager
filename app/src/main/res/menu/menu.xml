@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:title="Menu">
+            <menu>
+                <item
+                    android:id="@+id/menu_recruitment_news"
+                    android:icon="@drawable/menu_recruitment_news"
+                    android:title="Tin tuyển dụng" />
+
+                <item
+                    android:id="@+id/menu_employer"
+                    android:icon="@drawable/menu_employer"
+                    android:title="Nhà tuyển dụng" />
+
+                <item
+                    android:id="@+id/menu_history_application"
+                    android:icon="@drawable/menu_history_application"
+                    android:title="Lịch sử ứng tuyển" />
+
+                <item
+                    android:id="@+id/menu_create_recruitment_news"
+                    android:icon="@drawable/menu_create_recruitment_news"
+                    android:title="Đăng tin tuyển dụng" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="Ứng dụng">
+            <menu>
+                <item
+                    android:id="@+id/menu_app_infor"
+                    android:icon="@drawable/menu_app_infor"
+                    android:title="Thông tin ứng dụng" />
+
+                <item
+                    android:id="@+id/menu_app_support"
+                    android:icon="@drawable/menu_app_support"
+                    android:title="Hỗ trợ" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="Cài đặt">
+            <menu>
+                <item
+                    android:id="@+id/menu_account_infor"
+                    android:icon="@drawable/menu_account_infor"
+                    android:title="Tài khoản" />
+
+                <item
+                    android:id="@+id/menu_sign_out"
+                    android:icon="@drawable/menu_sign_out"
+                    android:title="Đăng xuất" />
+            </menu>
+        </item>
+    </group>
+
+</menu>

@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bgsent">#EEF4FF</color>
+    <color name="txtsent">#246BFD</color>
+    <color name="bgaccepted">#E9FBEF</color>
+    <color name="txtaccepted">#05DC6D</color>
+    <color name="bgrejected">#FEEAEA</color>
+    <color name="txtrejected">#FF4444</color>
 </resources>
